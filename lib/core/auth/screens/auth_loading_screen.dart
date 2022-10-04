@@ -18,7 +18,8 @@ class AuthLoadingScreen extends StatelessWidget {
             Navigator.pushNamedAndRemoveUntil(
                 context, '/home', (route) => false);
           } else if (state is AuthErrorState) {
-            Fluttertoast.showToast(msg: 'Something went wrong!');
+            Fluttertoast.showToast(
+                msg: 'Something went wrong!', gravity: ToastGravity.TOP);
           }
         },
         child: BlocBuilder<AuthBloc, AuthState>(
