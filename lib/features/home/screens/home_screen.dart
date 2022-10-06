@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:furniture_ecommerce_app/features/home/blocs/category_bar/category_bar_bloc.dart';
+import 'package:furniture_ecommerce_app/features/home/widgets/category_bar.dart';
 import 'package:furniture_ecommerce_app/features/home/widgets/top_bar.dart';
 import 'package:gap/gap.dart';
 
@@ -7,14 +10,18 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SingleChildScrollView(
-      child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: const [Gap(60), TopBar(), Gap(25)],
-          )),
-    ));
+    return BlocProvider(
+      create: (context) => CategoryBarBloc()
+        ..add(const CategoryBarSelectedEvent(categoryIndex: 0)),
+      child: Scaffold(
+          body: SingleChildScrollView(
+        child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: const [Gap(60), TopBar(), Gap(25), CategoryBar()],
+            )),
+      )),
+    );
   }
 }

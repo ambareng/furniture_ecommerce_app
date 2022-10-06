@@ -6,3 +6,4 @@ const Color lightGray = Color(0xFF808080);
 const Color gray = Color(0xFF606060);
 const Color black = Color(0xFF303030);
 const Color bgBlack = Color(0xFF242424);
+const Color unselectedCategory = Color(0xFFF5F5F5);
