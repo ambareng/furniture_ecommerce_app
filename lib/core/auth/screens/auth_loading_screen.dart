@@ -10,7 +10,7 @@ class AuthLoadingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is AuthUnauthenticatedState) {
             Navigator.pushNamedAndRemoveUntil(
                 context, '/onboarding', (route) => false);
