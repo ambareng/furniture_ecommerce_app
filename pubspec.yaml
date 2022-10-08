@@ -77,6 +77,8 @@ flutter:
     - assets/images/home/
     - assets/images/home/categories/popular_icon.svg
     - assets/images/home/categories/popular.png
+    - assets/images/home/items/item_01.png
+    - assets/images/home/add_to_cart.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
