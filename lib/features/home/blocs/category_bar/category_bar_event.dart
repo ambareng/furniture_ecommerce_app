@@ -2,16 +2,14 @@ part of 'category_bar_bloc.dart';
 
 abstract class CategoryBarEvent extends Equatable {
   const CategoryBarEvent();
-
-  @override
-  List<Object> get props => [];
 }
 
 class CategoryBarSelectedEvent extends CategoryBarEvent {
-  final int categoryIndex;
+  final int index;
+  final String? category;
 
-  const CategoryBarSelectedEvent({required this.categoryIndex});
+  const CategoryBarSelectedEvent({required this.index, this.category});
 
   @override
-  List<Object> get props => [categoryIndex];
+  List<Object?> get props => [index, category];
 }

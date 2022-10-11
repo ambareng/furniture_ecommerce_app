@@ -36,7 +36,7 @@ class CategoryBar extends StatelessWidget {
                       categoryTitle: categoryList[index]['label'],
                       index: index,
                       selected: state is CategoryBarSelectedState &&
-                              state.categoryIndex == index
+                              state.index == index
                           ? true
                           : false,
                     ));
@@ -73,7 +73,7 @@ class CategoryButton extends StatelessWidget {
                 color: selected ? black : unselectedCategory),
             child: IconButton(
                 onPressed: () => BlocProvider.of<CategoryBarBloc>(context)
-                    .add(CategoryBarSelectedEvent(categoryIndex: index)),
+                    .add(CategoryBarSelectedEvent(index: index)),
                 color: selected ? Colors.white : lightestGray,
                 iconSize: selected ? 30 : 25,
                 icon: Icon(icon))),

@@ -2,25 +2,29 @@ part of 'category_bar_bloc.dart';
 
 abstract class CategoryBarState extends Equatable {
   const CategoryBarState();
-
-  @override
-  List<Object> get props => [];
 }
 
 class CategoryBarInitial extends CategoryBarState {
-  final int categoryIndex;
+  final int index;
+  final String? category;
 
-  const CategoryBarInitial({this.categoryIndex = 0});
+  const CategoryBarInitial({this.index = 0, this.category});
 
   @override
-  List<Object> get props => [categoryIndex];
+  List<Object?> get props => [index, category];
 }
 
 class CategoryBarSelectedState extends CategoryBarState {
-  final int categoryIndex;
+  final int index;
+  final String? category;
 
-  const CategoryBarSelectedState({required this.categoryIndex});
+  const CategoryBarSelectedState({required this.index, this.category});
 
   @override
-  List<Object> get props => [categoryIndex];
+  List<Object?> get props => [index, category];
+}
+
+class CategoryBarLoadingState extends CategoryBarState {
+  @override
+  List<Object> get props => [];
 }
