@@ -17,6 +17,15 @@ const List<Map<String, dynamic>> categoryList = [
 class CategoryBar extends StatelessWidget {
   const CategoryBar({Key? key}) : super(key: key);
 
+  bool isCategorySelected(CategoryBarState state, int index) {
+    if (state is CategoryBarSelectedState && state.index == index) {
+      return true;
+    } else if (state is CategoryBarLoadingState && state.index == index) {
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CategoryBarBloc, CategoryBarState>(
@@ -35,10 +44,7 @@ class CategoryBar extends StatelessWidget {
                       icon: categoryList[index]['icon'],
                       categoryTitle: categoryList[index]['label'],
                       index: index,
-                      selected: state is CategoryBarSelectedState &&
-                              state.index == index
-                          ? true
-                          : false,
+                      selected: isCategorySelected(state, index),
                     ));
               }),
         );

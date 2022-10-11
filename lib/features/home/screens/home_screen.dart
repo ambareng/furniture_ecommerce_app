@@ -22,6 +22,7 @@ class HomeScreen extends StatelessWidget {
             body: SingleChildScrollView(
           child: Container(
               width: double.infinity,
+              height: MediaQuery.of(context).size.height,
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: const [

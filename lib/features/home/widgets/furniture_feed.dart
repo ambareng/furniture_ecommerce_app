@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:furniture_ecommerce_app/core/styles.dart';
+import 'package:furniture_ecommerce_app/features/home/blocs/category_bar/category_bar_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,21 +11,36 @@ class FurnitureFeed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.65,
-      child: GridView.builder(
-          physics: const ScrollPhysics(),
-          padding: EdgeInsets.zero,
-          shrinkWrap: true,
-          itemCount: 10,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 0,
-              mainAxisSpacing: 0,
-              childAspectRatio: 0.7),
-          itemBuilder: (context, index) {
-            return const FurnitureCard();
-          }),
+    return BlocBuilder<CategoryBarBloc, CategoryBarState>(
+      builder: (context, state) {
+        if (state is CategoryBarSelectedState) {
+          return SizedBox(
+            height: MediaQuery.of(context).size.height * 0.65,
+            child: GridView.builder(
+                physics: const ScrollPhysics(),
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                itemCount: 10,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 0,
+                    mainAxisSpacing: 0,
+                    childAspectRatio: 0.7),
+                itemBuilder: (context, index) {
+                  return const FurnitureCard();
+                }),
+          );
+        } else if (state is CategoryBarLoadingState) {
+          return Container(
+            padding:
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.25),
+            child: const CircularProgressIndicator(
+              color: lightestGray,
+            ),
+          );
+        }
+        return Container();
+      },
     );
   }
 }
@@ -54,7 +71,7 @@ class FurnitureCard extends StatelessWidget {
                 right: 0,
                 bottom: 0,
                 child: Container(
-                  margin: EdgeInsets.all(15),
+                  margin: const EdgeInsets.all(15),
                   child: SvgPicture.asset(
                       'assets/images/home/add_to_cart_icon.svg'),
                 )),
