@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:furniture_ecommerce_app/features/home/models/furniture.dart';
 import 'package:furniture_ecommerce_app/features/home/repositories/furniture_repo.dart';
 
 part 'category_bar_event.dart';
@@ -14,10 +15,21 @@ class CategoryBarBloc extends Bloc<CategoryBarEvent, CategoryBarState> {
     on<CategoryBarSelectedEvent>((event, emit) async {
       emit(CategoryBarLoadingState(
           index: event.index, category: event.category));
-      await Future.delayed(const Duration(seconds: 2));
-      // await furnitureRepo.getAllFurnitures();
-      emit(CategoryBarSelectedState(
-          index: event.index, category: event.category));
+      late List<Furniture>? furnitures;
+      if (event.category != null) {
+        furnitures = await furnitureRepo.getFurnituresByCategory(
+            category: event.category!);
+      } else {
+        furnitures = await furnitureRepo.getAllFurnitures();
+      }
+      if (furnitures != null) {
+        emit(CategoryBarSelectedState(
+            index: event.index,
+            category: event.category,
+            furnitures: furnitures));
+      } else {
+        emit(const CategoryBarErrorState(error: 'Unable to load furnitures!'));
+      }
     });
   }
 }

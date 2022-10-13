@@ -78,8 +78,11 @@ class CategoryButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 color: selected ? black : unselectedCategory),
             child: IconButton(
-                onPressed: () => BlocProvider.of<CategoryBarBloc>(context)
-                    .add(CategoryBarSelectedEvent(index: index)),
+                onPressed: () => BlocProvider.of<CategoryBarBloc>(context).add(
+                    CategoryBarSelectedEvent(
+                        index: index,
+                        category:
+                            categoryTitle == "Popular" ? null : categoryTitle)),
                 color: selected ? Colors.white : lightestGray,
                 iconSize: selected ? 30 : 25,
                 icon: Icon(icon))),

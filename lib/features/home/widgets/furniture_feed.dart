@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:furniture_ecommerce_app/core/styles.dart';
 import 'package:furniture_ecommerce_app/features/home/blocs/category_bar/category_bar_bloc.dart';
+import 'package:furniture_ecommerce_app/features/home/models/furniture.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -14,20 +15,30 @@ class FurnitureFeed extends StatelessWidget {
     return BlocBuilder<CategoryBarBloc, CategoryBarState>(
       builder: (context, state) {
         if (state is CategoryBarSelectedState) {
+          if (state.furnitures.isEmpty) {
+            return Text(
+              'No items...',
+              style: GoogleFonts.nunitoSans(
+                  textStyle: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w400, color: gray)),
+            );
+          }
           return SizedBox(
             height: MediaQuery.of(context).size.height * 0.65,
             child: GridView.builder(
                 physics: const ScrollPhysics(),
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
-                itemCount: 10,
+                itemCount: state.furnitures.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 0,
                     mainAxisSpacing: 0,
                     childAspectRatio: 0.7),
                 itemBuilder: (context, index) {
-                  return const FurnitureCard();
+                  return FurnitureCard(
+                    furniture: state.furnitures[index],
+                  );
                 }),
           );
         } else if (state is CategoryBarLoadingState) {
@@ -46,9 +57,9 @@ class FurnitureFeed extends StatelessWidget {
 }
 
 class FurnitureCard extends StatelessWidget {
-  const FurnitureCard({
-    Key? key,
-  }) : super(key: key);
+  final Furniture furniture;
+
+  const FurnitureCard({Key? key, required this.furniture}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -63,8 +74,8 @@ class FurnitureCard extends StatelessWidget {
               height: 200,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  image: const DecorationImage(
-                      image: AssetImage('assets/images/home/items/item_01.png'),
+                  image: DecorationImage(
+                      image: NetworkImage(furniture.imageURL),
                       fit: BoxFit.cover)),
             ),
             Positioned(
@@ -82,7 +93,7 @@ class FurnitureCard extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Black Simple Lamp',
+                furniture.name,
                 style: GoogleFonts.nunitoSans(
                     textStyle: const TextStyle(
                         fontSize: 14,
@@ -97,7 +108,7 @@ class FurnitureCard extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                '\$ 12.00',
+                '\$ ${furniture.price}',
                 style: GoogleFonts.nunitoSans(
                     textStyle: const TextStyle(
                         fontSize: 14,

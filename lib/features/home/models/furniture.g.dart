@@ -1,7 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: non_constant_identifier_names
-
 part of 'furniture.dart';
 
 // **************************************************************************
@@ -12,6 +10,7 @@ _$_Furniture _$$_FurnitureFromJson(Map<String, dynamic> json) => _$_Furniture(
       id: json['id'] as int,
       name: json['name'] as String,
       price: (json['price'] as num).toDouble(),
+      imageURL: json['imageURL'] as String,
     );
 
 Map<String, dynamic> _$$_FurnitureToJson(_$_Furniture instance) =>
@@ -19,4 +18,5 @@ Map<String, dynamic> _$$_FurnitureToJson(_$_Furniture instance) =>
       'id': instance.id,
       'name': instance.name,
       'price': instance.price,
+      'imageURL': instance.imageURL,
     };

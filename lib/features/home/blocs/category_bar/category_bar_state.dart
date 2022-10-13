@@ -17,8 +17,10 @@ class CategoryBarInitial extends CategoryBarState {
 class CategoryBarSelectedState extends CategoryBarState {
   final int index;
   final String? category;
+  final List<Furniture> furnitures;
 
-  const CategoryBarSelectedState({required this.index, this.category});
+  const CategoryBarSelectedState(
+      {required this.index, this.category, required this.furnitures});
 
   @override
   List<Object?> get props => [index, category];
@@ -32,4 +34,13 @@ class CategoryBarLoadingState extends CategoryBarState {
 
   @override
   List<Object?> get props => [index, category];
+}
+
+class CategoryBarErrorState extends CategoryBarState {
+  final String error;
+
+  const CategoryBarErrorState({required this.error});
+
+  @override
+  List<Object> get props => [error];
 }

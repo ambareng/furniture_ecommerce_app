@@ -23,6 +23,7 @@ mixin _$Furniture {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
+  String get imageURL => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +35,7 @@ mixin _$Furniture {
 abstract class $FurnitureCopyWith<$Res> {
   factory $FurnitureCopyWith(Furniture value, $Res Function(Furniture) then) =
       _$FurnitureCopyWithImpl<$Res>;
-  $Res call({int id, String name, double price});
+  $Res call({int id, String name, double price, String imageURL});
 }
 
 /// @nodoc
@@ -50,6 +51,7 @@ class _$FurnitureCopyWithImpl<$Res> implements $FurnitureCopyWith<$Res> {
     Object? id = freezed,
     Object? name = freezed,
     Object? price = freezed,
+    Object? imageURL = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -64,6 +66,10 @@ class _$FurnitureCopyWithImpl<$Res> implements $FurnitureCopyWith<$Res> {
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
+      imageURL: imageURL == freezed
+          ? _value.imageURL
+          : imageURL // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -74,7 +80,7 @@ abstract class _$$_FurnitureCopyWith<$Res> implements $FurnitureCopyWith<$Res> {
           _$_Furniture value, $Res Function(_$_Furniture) then) =
       __$$_FurnitureCopyWithImpl<$Res>;
   @override
-  $Res call({int id, String name, double price});
+  $Res call({int id, String name, double price, String imageURL});
 }
 
 /// @nodoc
@@ -92,6 +98,7 @@ class __$$_FurnitureCopyWithImpl<$Res> extends _$FurnitureCopyWithImpl<$Res>
     Object? id = freezed,
     Object? name = freezed,
     Object? price = freezed,
+    Object? imageURL = freezed,
   }) {
     return _then(_$_Furniture(
       id: id == freezed
@@ -106,6 +113,10 @@ class __$$_FurnitureCopyWithImpl<$Res> extends _$FurnitureCopyWithImpl<$Res>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
+      imageURL: imageURL == freezed
+          ? _value.imageURL
+          : imageURL // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -113,7 +124,11 @@ class __$$_FurnitureCopyWithImpl<$Res> extends _$FurnitureCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Furniture implements _Furniture {
-  _$_Furniture({required this.id, required this.name, required this.price});
+  _$_Furniture(
+      {required this.id,
+      required this.name,
+      required this.price,
+      required this.imageURL});
 
   factory _$_Furniture.fromJson(Map<String, dynamic> json) =>
       _$$_FurnitureFromJson(json);
@@ -124,10 +139,12 @@ class _$_Furniture implements _Furniture {
   final String name;
   @override
   final double price;
+  @override
+  final String imageURL;
 
   @override
   String toString() {
-    return 'Furniture(id: $id, name: $name, price: $price)';
+    return 'Furniture(id: $id, name: $name, price: $price, imageURL: $imageURL)';
   }
 
   @override
@@ -137,7 +154,8 @@ class _$_Furniture implements _Furniture {
             other is _$_Furniture &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.price, price));
+            const DeepCollectionEquality().equals(other.price, price) &&
+            const DeepCollectionEquality().equals(other.imageURL, imageURL));
   }
 
   @JsonKey(ignore: true)
@@ -146,7 +164,8 @@ class _$_Furniture implements _Furniture {
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(price));
+      const DeepCollectionEquality().hash(price),
+      const DeepCollectionEquality().hash(imageURL));
 
   @JsonKey(ignore: true)
   @override
@@ -165,7 +184,8 @@ abstract class _Furniture implements Furniture {
   factory _Furniture(
       {required final int id,
       required final String name,
-      required final double price}) = _$_Furniture;
+      required final double price,
+      required final String imageURL}) = _$_Furniture;
 
   factory _Furniture.fromJson(Map<String, dynamic> json) =
       _$_Furniture.fromJson;
@@ -176,6 +196,8 @@ abstract class _Furniture implements Furniture {
   String get name;
   @override
   double get price;
+  @override
+  String get imageURL;
   @override
   @JsonKey(ignore: true)
   _$$_FurnitureCopyWith<_$_Furniture> get copyWith =>
