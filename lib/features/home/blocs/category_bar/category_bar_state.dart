@@ -44,3 +44,15 @@ class CategoryBarErrorState extends CategoryBarState {
   @override
   List<Object> get props => [error];
 }
+
+class CategoryLoadMoreState extends CategoryBarState {
+  final int index;
+  final String? category;
+  final List<Furniture> furnitures;
+
+  const CategoryLoadMoreState(
+      {required this.index, this.category, required this.furnitures});
+
+  @override
+  List<Object?> get props => [index, category, furnitures];
+}

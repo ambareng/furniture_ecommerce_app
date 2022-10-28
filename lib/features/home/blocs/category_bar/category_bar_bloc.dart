@@ -31,5 +31,23 @@ class CategoryBarBloc extends Bloc<CategoryBarEvent, CategoryBarState> {
         emit(const CategoryBarErrorState(error: 'Unable to load furnitures!'));
       }
     });
+    on<CategoryBarOnScrollEvent>((event, emit) async {
+      emit(CategoryLoadMoreState(
+          index: event.index,
+          category: event.category,
+          furnitures: event.furnitures));
+      furnitureRepo.addPageOffset();
+      final furnitures = await furnitureRepo.getAllFurnitures();
+      debugPrint('$furnitures');
+      if (furnitures != null) {
+        debugPrint('ok!?');
+        emit(CategoryBarSelectedState(
+            index: event.index,
+            category: event.category,
+            furnitures: [...event.furnitures, ...furnitures]));
+      } else {
+        emit(const CategoryBarErrorState(error: 'Unable to load furnitures!'));
+      }
+    });
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:furniture_ecommerce_app/core/styles.dart';
 import 'package:furniture_ecommerce_app/features/home/blocs/category_bar/category_bar_bloc.dart';
@@ -7,11 +8,14 @@ import 'package:furniture_ecommerce_app/features/home/models/furniture.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class FurnitureFeed extends StatelessWidget {
+class FurnitureFeed extends HookWidget {
   const FurnitureFeed({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final ScrollController scrollController = useScrollController();
+    // scrollController.addListener(() {});
+
     return BlocBuilder<CategoryBarBloc, CategoryBarState>(
       builder: (context, state) {
         if (state is CategoryBarSelectedState) {
@@ -25,21 +29,38 @@ class FurnitureFeed extends StatelessWidget {
           }
           return SizedBox(
             height: MediaQuery.of(context).size.height * 0.65,
-            child: GridView.builder(
-                physics: const ScrollPhysics(),
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                itemCount: state.furnitures.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 0,
-                    mainAxisSpacing: 0,
-                    childAspectRatio: 0.7),
-                itemBuilder: (context, index) {
-                  return FurnitureCard(
-                    furniture: state.furnitures[index],
-                  );
-                }),
+            child: NotificationListener<ScrollUpdateNotification>(
+              child: GridView.builder(
+                  controller: scrollController,
+                  physics: const ScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  itemCount: state.furnitures.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 0,
+                      mainAxisSpacing: 0,
+                      childAspectRatio: 0.7),
+                  itemBuilder: (context, index) {
+                    return FurnitureCard(
+                      furniture: state.furnitures[index],
+                    );
+                  }),
+              onNotification: (notification) {
+                double maxScrollLength =
+                    scrollController.position.maxScrollExtent;
+                double currentScrollPosition = scrollController.position.pixels;
+                double scrollLengthTrigger = 0.00;
+
+                if ((maxScrollLength - currentScrollPosition) ==
+                    scrollLengthTrigger) {
+                  BlocProvider.of<CategoryBarBloc>(context).add(
+                      CategoryBarOnScrollEvent(
+                          furnitures: state.furnitures, index: state.index));
+                }
+                return true;
+              },
+            ),
           );
         } else if (state is CategoryBarLoadingState) {
           return Container(

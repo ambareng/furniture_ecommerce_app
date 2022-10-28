@@ -13,3 +13,15 @@ class CategoryBarSelectedEvent extends CategoryBarEvent {
   @override
   List<Object?> get props => [index, category];
 }
+
+class CategoryBarOnScrollEvent extends CategoryBarEvent {
+  final int index;
+  final String? category;
+  final List<Furniture> furnitures;
+
+  const CategoryBarOnScrollEvent(
+      {required this.furnitures, required this.index, this.category});
+
+  @override
+  List<Object?> get props => [index, category, furnitures];
+}
