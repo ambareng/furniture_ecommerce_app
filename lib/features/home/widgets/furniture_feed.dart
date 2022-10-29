@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:furniture_ecommerce_app/core/styles.dart';
+import 'package:furniture_ecommerce_app/features/furniture/bloc/furniture_bloc.dart';
 import 'package:furniture_ecommerce_app/features/home/blocs/category_bar/category_bar_bloc.dart';
 import 'package:furniture_ecommerce_app/features/home/models/furniture.dart';
 import 'package:gap/gap.dart';
@@ -47,17 +48,17 @@ class FurnitureFeed extends HookWidget {
                     );
                   }),
               onNotification: (notification) {
-                double maxScrollLength =
-                    scrollController.position.maxScrollExtent;
-                double currentScrollPosition = scrollController.position.pixels;
-                double scrollLengthTrigger = 0.00;
+                // double maxScrollLength =
+                //     scrollController.position.maxScrollExtent;
+                // double currentScrollPosition = scrollController.position.pixels;
+                // double scrollLengthTrigger = 0.00;
 
-                if ((maxScrollLength - currentScrollPosition) ==
-                    scrollLengthTrigger) {
-                  BlocProvider.of<CategoryBarBloc>(context).add(
-                      CategoryBarOnScrollEvent(
-                          furnitures: state.furnitures, index: state.index));
-                }
+                // if ((maxScrollLength - currentScrollPosition) ==
+                //     scrollLengthTrigger) {
+                //   BlocProvider.of<CategoryBarBloc>(context).add(
+                //       CategoryBarOnScrollEvent(
+                //           furnitures: state.furnitures, index: state.index));
+                // }
                 return true;
               },
             ),
@@ -84,61 +85,68 @@ class FurnitureCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 155,
-      height: 205,
-      child: Column(
-        children: [
-          Stack(children: [
-            Container(
-              width: 150,
-              height: 200,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  image: DecorationImage(
-                      image: NetworkImage(furniture.imageURL),
-                      fit: BoxFit.cover)),
-            ),
-            Positioned(
-                right: 0,
-                bottom: 0,
-                child: Container(
-                  margin: const EdgeInsets.all(15),
-                  child: SvgPicture.asset(
-                      'assets/images/home/add_to_cart_icon.svg'),
-                )),
-          ]),
-          const Gap(5),
-          Padding(
-            padding: const EdgeInsets.only(left: 17.5),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                furniture.name,
-                style: GoogleFonts.nunitoSans(
-                    textStyle: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: gray)),
+    return GestureDetector(
+      onTap: () {
+        BlocProvider.of<FurnitureBloc>(context)
+            .add(FurnitureSelectedEvent(furniture: furniture));
+        // Navigator.pushNamed(context, '/furniture');
+      },
+      child: SizedBox(
+        width: 155,
+        height: 205,
+        child: Column(
+          children: [
+            Stack(children: [
+              Container(
+                width: 150,
+                height: 200,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    image: DecorationImage(
+                        image: NetworkImage(furniture.imageURL),
+                        fit: BoxFit.cover)),
+              ),
+              Positioned(
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    margin: const EdgeInsets.all(15),
+                    child: SvgPicture.asset(
+                        'assets/images/home/add_to_cart_icon.svg'),
+                  )),
+            ]),
+            const Gap(5),
+            Padding(
+              padding: const EdgeInsets.only(left: 17.5),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  furniture.name,
+                  style: GoogleFonts.nunitoSans(
+                      textStyle: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: gray)),
+                ),
               ),
             ),
-          ),
-          const Gap(2),
-          Padding(
-            padding: const EdgeInsets.only(left: 17.5),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                '\$ ${furniture.price}',
-                style: GoogleFonts.nunitoSans(
-                    textStyle: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        color: black)),
+            const Gap(2),
+            Padding(
+              padding: const EdgeInsets.only(left: 17.5),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '\$ ${furniture.price}',
+                  style: GoogleFonts.nunitoSans(
+                      textStyle: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: black)),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

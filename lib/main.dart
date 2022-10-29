@@ -7,6 +7,8 @@ import 'package:furniture_ecommerce_app/core/auth/repositories/auth_repo.dart';
 import 'package:furniture_ecommerce_app/core/auth/screens/auth_loading_screen.dart';
 import 'package:furniture_ecommerce_app/features/auth/screens/login_screen.dart';
 import 'package:furniture_ecommerce_app/features/auth/screens/signup_screen.dart';
+import 'package:furniture_ecommerce_app/features/furniture/bloc/furniture_bloc.dart';
+import 'package:furniture_ecommerce_app/features/furniture/screens/furniture_screen.dart';
 import 'package:furniture_ecommerce_app/features/home/screens/home_screen.dart';
 import 'package:furniture_ecommerce_app/features/onboarding/screens/onboarding_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -37,6 +39,7 @@ class MyApp extends StatelessWidget {
                 AuthBloc(authRepo: RepositoryProvider.of<AuthRepo>(context))
                   ..add(AuthLoadAuthenticationEvent()),
           ),
+          BlocProvider(create: (context) => FurnitureBloc())
         ],
         child: MaterialApp(
             theme: ThemeData(
@@ -50,6 +53,7 @@ class MyApp extends StatelessWidget {
               '/login': (context) => const LoginScreen(),
               '/signup': (context) => SignupScreen(),
               '/home': (context) => const HomeScreen(),
+              '/furniture': (context) => const FurnitureScreen(),
             }),
       ),
     );
