@@ -89,7 +89,7 @@ class FurnitureCard extends StatelessWidget {
       onTap: () {
         BlocProvider.of<FurnitureBloc>(context)
             .add(FurnitureSelectedEvent(furniture: furniture));
-        // Navigator.pushNamed(context, '/furniture');
+        Navigator.pushNamed(context, '/furniture');
       },
       child: SizedBox(
         width: 155,
