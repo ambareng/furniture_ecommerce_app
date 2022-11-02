@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_ecommerce_app/core/styles.dart';
 import 'package:furniture_ecommerce_app/features/furniture/bloc/furniture_bloc.dart';
+import 'package:furniture_ecommerce_app/features/furniture/bloc/furniture_order_quantity_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -160,49 +161,68 @@ class FurnitureDetails extends StatelessWidget {
                     textStyle: const TextStyle(
                         fontWeight: FontWeight.w700, fontSize: 30)),
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.3,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: 30,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          color: const Color(0xFFF3F3F3),
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(
-                              width: 0.5,
-                              color: Colors.black.withOpacity(0.05))),
-                      child: const Icon(
-                        Icons.add,
-                        color: black,
-                      ),
+              BlocBuilder<FurnitureOrderQuantityBloc,
+                  FurnitureOrderQuantityState>(
+                builder: (context, state) {
+                  return SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            BlocProvider.of<FurnitureOrderQuantityBloc>(context)
+                                .add(FurnitureOrderQuantityAddEvent(
+                                    currentQuantity: state.quantity));
+                          },
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                                color: const Color(0xFFF3F3F3),
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(
+                                    width: 0.5,
+                                    color: Colors.black.withOpacity(0.05))),
+                            child: const Icon(
+                              Icons.add,
+                              color: black,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          '${state.quantity < 10 ? "0" : ""}${state.quantity}',
+                          style: GoogleFonts.nunitoSans(
+                              textStyle: const TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                  letterSpacing: 1)),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            BlocProvider.of<FurnitureOrderQuantityBloc>(context)
+                                .add(FurnitureOrderQuantityRemoveEvent(
+                                    currentQuantity: state.quantity));
+                          },
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                                color: const Color(0xFFF3F3F3),
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(
+                                    width: 0.5,
+                                    color: Colors.black.withOpacity(0.05))),
+                            child: const Icon(
+                              Icons.remove,
+                              color: black,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      '01',
-                      style: GoogleFonts.nunitoSans(
-                          textStyle: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                              letterSpacing: 1)),
-                    ),
-                    Container(
-                      width: 30,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          color: const Color(0xFFF3F3F3),
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(
-                              width: 0.5,
-                              color: Colors.black.withOpacity(0.05))),
-                      child: const Icon(
-                        Icons.remove,
-                        color: black,
-                      ),
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
             ],
           ),

@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:furniture_ecommerce_app/core/styles.dart';
 import 'package:furniture_ecommerce_app/features/furniture/bloc/furniture_bloc.dart';
+import 'package:furniture_ecommerce_app/features/furniture/bloc/furniture_order_quantity_bloc.dart';
 import 'package:furniture_ecommerce_app/features/home/blocs/category_bar/category_bar_bloc.dart';
 import 'package:furniture_ecommerce_app/features/home/models/furniture.dart';
 import 'package:gap/gap.dart';
@@ -89,6 +90,8 @@ class FurnitureCard extends StatelessWidget {
       onTap: () {
         BlocProvider.of<FurnitureBloc>(context)
             .add(FurnitureSelectedEvent(furniture: furniture));
+        BlocProvider.of<FurnitureOrderQuantityBloc>(context)
+            .add(FurnitureOrderQuantityResetEvent());
         Navigator.pushNamed(context, '/furniture');
       },
       child: SizedBox(
