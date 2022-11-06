@@ -7,6 +7,7 @@ import 'package:furniture_ecommerce_app/core/auth/repositories/auth_repo.dart';
 import 'package:furniture_ecommerce_app/core/auth/screens/auth_loading_screen.dart';
 import 'package:furniture_ecommerce_app/features/auth/screens/login_screen.dart';
 import 'package:furniture_ecommerce_app/features/auth/screens/signup_screen.dart';
+import 'package:furniture_ecommerce_app/features/bottom_navbar/bloc/bottom_navbar_bloc.dart';
 import 'package:furniture_ecommerce_app/features/furniture/bloc/furniture_bloc.dart';
 import 'package:furniture_ecommerce_app/features/furniture/bloc/furniture_order_quantity_bloc.dart';
 import 'package:furniture_ecommerce_app/features/furniture/screens/furniture_screen.dart';
@@ -41,7 +42,8 @@ class MyApp extends StatelessWidget {
                   ..add(AuthLoadAuthenticationEvent()),
           ),
           BlocProvider(create: (context) => FurnitureBloc()),
-          BlocProvider(create: (context) => FurnitureOrderQuantityBloc())
+          BlocProvider(create: (context) => FurnitureOrderQuantityBloc()),
+          BlocProvider(create: ((context) => BottomNavbarBloc()))
         ],
         child: MaterialApp(
             theme: ThemeData(
