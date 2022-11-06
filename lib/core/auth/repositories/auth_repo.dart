@@ -11,6 +11,10 @@ class AuthRepo {
     return await storage.read(key: 'accessToken');
   }
 
+  Future<String?> getRefreshToken() async {
+    return await storage.read(key: 'refreshToken');
+  }
+
   Future<void> saveTokens(
       {required String accessToken, required String refreshToken}) async {
     await storage.write(key: 'accessToken', value: accessToken);

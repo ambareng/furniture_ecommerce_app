@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:furniture_ecommerce_app/core/auth/repositories/auth_repo.dart';
 import 'package:furniture_ecommerce_app/features/home/blocs/category_bar/category_bar_bloc.dart';
 import 'package:furniture_ecommerce_app/features/home/repositories/furniture_repo.dart';
 import 'package:furniture_ecommerce_app/features/home/widgets/category_bar.dart';
@@ -16,7 +17,8 @@ class HomeScreen extends StatelessWidget {
       create: (context) => FurnitureRepo(),
       child: BlocProvider(
         create: (context) => CategoryBarBloc(
-            furnitureRepo: RepositoryProvider.of<FurnitureRepo>(context))
+            furnitureRepo: RepositoryProvider.of<FurnitureRepo>(context),
+            authRepo: RepositoryProvider.of<AuthRepo>(context))
           ..add(const CategoryBarSelectedEvent(index: 0)),
         child: Scaffold(
             body: SingleChildScrollView(

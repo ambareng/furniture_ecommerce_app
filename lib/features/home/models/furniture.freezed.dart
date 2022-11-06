@@ -24,6 +24,7 @@ mixin _$Furniture {
   String get name => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
   String get imageURL => throw _privateConstructorUsedError;
+  bool get isBookmarked => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,43 +35,53 @@ mixin _$Furniture {
 /// @nodoc
 abstract class $FurnitureCopyWith<$Res> {
   factory $FurnitureCopyWith(Furniture value, $Res Function(Furniture) then) =
-      _$FurnitureCopyWithImpl<$Res>;
-  $Res call({int id, String name, double price, String imageURL});
+      _$FurnitureCopyWithImpl<$Res, Furniture>;
+  @useResult
+  $Res call(
+      {int id, String name, double price, String imageURL, bool isBookmarked});
 }
 
 /// @nodoc
-class _$FurnitureCopyWithImpl<$Res> implements $FurnitureCopyWith<$Res> {
+class _$FurnitureCopyWithImpl<$Res, $Val extends Furniture>
+    implements $FurnitureCopyWith<$Res> {
   _$FurnitureCopyWithImpl(this._value, this._then);
 
-  final Furniture _value;
   // ignore: unused_field
-  final $Res Function(Furniture) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? price = freezed,
-    Object? imageURL = freezed,
+    Object? id = null,
+    Object? name = null,
+    Object? price = null,
+    Object? imageURL = null,
+    Object? isBookmarked = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      price: price == freezed
+      price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
-      imageURL: imageURL == freezed
+      imageURL: null == imageURL
           ? _value.imageURL
           : imageURL // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+      isBookmarked: null == isBookmarked
+          ? _value.isBookmarked
+          : isBookmarked // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
   }
 }
 
@@ -80,43 +91,49 @@ abstract class _$$_FurnitureCopyWith<$Res> implements $FurnitureCopyWith<$Res> {
           _$_Furniture value, $Res Function(_$_Furniture) then) =
       __$$_FurnitureCopyWithImpl<$Res>;
   @override
-  $Res call({int id, String name, double price, String imageURL});
+  @useResult
+  $Res call(
+      {int id, String name, double price, String imageURL, bool isBookmarked});
 }
 
 /// @nodoc
-class __$$_FurnitureCopyWithImpl<$Res> extends _$FurnitureCopyWithImpl<$Res>
+class __$$_FurnitureCopyWithImpl<$Res>
+    extends _$FurnitureCopyWithImpl<$Res, _$_Furniture>
     implements _$$_FurnitureCopyWith<$Res> {
   __$$_FurnitureCopyWithImpl(
       _$_Furniture _value, $Res Function(_$_Furniture) _then)
-      : super(_value, (v) => _then(v as _$_Furniture));
+      : super(_value, _then);
 
-  @override
-  _$_Furniture get _value => super._value as _$_Furniture;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? price = freezed,
-    Object? imageURL = freezed,
+    Object? id = null,
+    Object? name = null,
+    Object? price = null,
+    Object? imageURL = null,
+    Object? isBookmarked = null,
   }) {
     return _then(_$_Furniture(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      price: price == freezed
+      price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
-      imageURL: imageURL == freezed
+      imageURL: null == imageURL
           ? _value.imageURL
           : imageURL // ignore: cast_nullable_to_non_nullable
               as String,
+      isBookmarked: null == isBookmarked
+          ? _value.isBookmarked
+          : isBookmarked // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -128,7 +145,8 @@ class _$_Furniture implements _Furniture {
       {required this.id,
       required this.name,
       required this.price,
-      required this.imageURL});
+      required this.imageURL,
+      required this.isBookmarked});
 
   factory _$_Furniture.fromJson(Map<String, dynamic> json) =>
       _$$_FurnitureFromJson(json);
@@ -141,10 +159,12 @@ class _$_Furniture implements _Furniture {
   final double price;
   @override
   final String imageURL;
+  @override
+  final bool isBookmarked;
 
   @override
   String toString() {
-    return 'Furniture(id: $id, name: $name, price: $price, imageURL: $imageURL)';
+    return 'Furniture(id: $id, name: $name, price: $price, imageURL: $imageURL, isBookmarked: $isBookmarked)';
   }
 
   @override
@@ -152,23 +172,23 @@ class _$_Furniture implements _Furniture {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Furniture &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.price, price) &&
-            const DeepCollectionEquality().equals(other.imageURL, imageURL));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.imageURL, imageURL) ||
+                other.imageURL == imageURL) &&
+            (identical(other.isBookmarked, isBookmarked) ||
+                other.isBookmarked == isBookmarked));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(price),
-      const DeepCollectionEquality().hash(imageURL));
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, price, imageURL, isBookmarked);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_FurnitureCopyWith<_$_Furniture> get copyWith =>
       __$$_FurnitureCopyWithImpl<_$_Furniture>(this, _$identity);
 
@@ -185,7 +205,8 @@ abstract class _Furniture implements Furniture {
       {required final int id,
       required final String name,
       required final double price,
-      required final String imageURL}) = _$_Furniture;
+      required final String imageURL,
+      required final bool isBookmarked}) = _$_Furniture;
 
   factory _Furniture.fromJson(Map<String, dynamic> json) =
       _$_Furniture.fromJson;
@@ -198,6 +219,8 @@ abstract class _Furniture implements Furniture {
   double get price;
   @override
   String get imageURL;
+  @override
+  bool get isBookmarked;
   @override
   @JsonKey(ignore: true)
   _$$_FurnitureCopyWith<_$_Furniture> get copyWith =>

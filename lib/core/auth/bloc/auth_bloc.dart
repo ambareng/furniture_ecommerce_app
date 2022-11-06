@@ -13,8 +13,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoadingState());
       try {
         final accessToken = await authRepo.getAccessToken();
-        if (accessToken != null) {
-          emit(AuthAuthenticatedState());
+        final refreshToken = await authRepo.getRefreshToken();
+        if (accessToken != null && refreshToken != null) {
+          emit(AuthAuthenticatedState(
+              accessToken: accessToken, refreshToken: refreshToken));
         } else {
           emit(AuthUnauthenticatedState());
         }
@@ -31,7 +33,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         if (res.containsKey('access')) {
           await authRepo.saveTokens(
               accessToken: res['access'], refreshToken: res['refresh']);
-          emit(AuthAuthenticatedState());
+          emit(AuthAuthenticatedState(
+              accessToken: res['access'], refreshToken: res['refresh']));
         } else {
           emit(AuthErrorState(errorList: res));
         }

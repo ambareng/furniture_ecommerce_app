@@ -111,19 +111,25 @@ class BookmarkButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        width: 60,
-        height: 60,
-        decoration: BoxDecoration(
-            color: whiteGray, borderRadius: BorderRadius.circular(10)),
-        child: const Icon(
-          Icons.bookmark_border_rounded,
-          color: black,
-          size: 24,
-        ),
-      ),
+    return BlocBuilder<FurnitureBloc, FurnitureState>(
+      builder: (context, state) {
+        return GestureDetector(
+          onTap: () {},
+          child: Container(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+                color: whiteGray, borderRadius: BorderRadius.circular(10)),
+            child: Icon(
+              state.furniture!.isBookmarked
+                  ? Icons.bookmark_rounded
+                  : Icons.bookmark_border_rounded,
+              color: black,
+              size: 24,
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -135,141 +141,149 @@ class FurnitureDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(
-          top: 25,
-          left: MediaQuery.of(context).size.width * 0.05,
-          right: MediaQuery.of(context).size.width * 0.05),
-      width: double.infinity,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Minimal Stand',
-            style: GoogleFonts.gelasio(
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.w500, fontSize: 24, color: black)),
-          ),
-          const Gap(15),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return BlocBuilder<FurnitureBloc, FurnitureState>(
+      builder: (context, state) {
+        return Container(
+          padding: EdgeInsets.only(
+              top: 25,
+              left: MediaQuery.of(context).size.width * 0.05,
+              right: MediaQuery.of(context).size.width * 0.05),
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '\$ 50',
-                style: GoogleFonts.nunitoSans(
+                state.furniture!.name,
+                style: GoogleFonts.gelasio(
                     textStyle: const TextStyle(
-                        fontWeight: FontWeight.w700, fontSize: 30)),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 24,
+                        color: black)),
               ),
-              BlocBuilder<FurnitureOrderQuantityBloc,
-                  FurnitureOrderQuantityState>(
-                builder: (context, state) {
-                  return SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.3,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            BlocProvider.of<FurnitureOrderQuantityBloc>(context)
-                                .add(FurnitureOrderQuantityAddEvent(
-                                    currentQuantity: state.quantity));
-                          },
-                          child: Container(
-                            width: 30,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                color: const Color(0xFFF3F3F3),
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(
-                                    width: 0.5,
-                                    color: Colors.black.withOpacity(0.05))),
-                            child: const Icon(
-                              Icons.add,
-                              color: black,
+              const Gap(15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '\$ ${state.furniture!.price}',
+                    style: GoogleFonts.nunitoSans(
+                        textStyle: const TextStyle(
+                            fontWeight: FontWeight.w700, fontSize: 30)),
+                  ),
+                  BlocBuilder<FurnitureOrderQuantityBloc,
+                      FurnitureOrderQuantityState>(
+                    builder: (context, state) {
+                      return SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                BlocProvider.of<FurnitureOrderQuantityBloc>(
+                                        context)
+                                    .add(FurnitureOrderQuantityAddEvent(
+                                        currentQuantity: state.quantity));
+                              },
+                              child: Container(
+                                width: 30,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                    color: const Color(0xFFF3F3F3),
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: Border.all(
+                                        width: 0.5,
+                                        color: Colors.black.withOpacity(0.05))),
+                                child: const Icon(
+                                  Icons.add,
+                                  color: black,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        Text(
-                          '${state.quantity < 10 ? "0" : ""}${state.quantity}',
-                          style: GoogleFonts.nunitoSans(
-                              textStyle: const TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 18,
-                                  letterSpacing: 1)),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            BlocProvider.of<FurnitureOrderQuantityBloc>(context)
-                                .add(FurnitureOrderQuantityRemoveEvent(
-                                    currentQuantity: state.quantity));
-                          },
-                          child: Container(
-                            width: 30,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                color: const Color(0xFFF3F3F3),
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(
-                                    width: 0.5,
-                                    color: Colors.black.withOpacity(0.05))),
-                            child: const Icon(
-                              Icons.remove,
-                              color: black,
+                            Text(
+                              '${state.quantity < 10 ? "0" : ""}${state.quantity}',
+                              style: GoogleFonts.nunitoSans(
+                                  textStyle: const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 18,
+                                      letterSpacing: 1)),
                             ),
-                          ),
+                            GestureDetector(
+                              onTap: () {
+                                BlocProvider.of<FurnitureOrderQuantityBloc>(
+                                        context)
+                                    .add(FurnitureOrderQuantityRemoveEvent(
+                                        currentQuantity: state.quantity));
+                              },
+                              child: Container(
+                                width: 30,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                    color: const Color(0xFFF3F3F3),
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: Border.all(
+                                        width: 0.5,
+                                        color: Colors.black.withOpacity(0.05))),
+                                child: const Icon(
+                                  Icons.remove,
+                                  color: black,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  );
-                },
+                      );
+                    },
+                  ),
+                ],
               ),
-            ],
-          ),
-          const Gap(10),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.star_rate_rounded,
-                color: Color(0xFFF2C94C),
-                size: 35,
+              const Gap(10),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.star_rate_rounded,
+                    color: Color(0xFFF2C94C),
+                    size: 35,
+                  ),
+                  const Gap(5),
+                  Text(
+                    '4.5',
+                    style: GoogleFonts.nunitoSans(
+                        textStyle: const TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18,
+                            color: black,
+                            height: 1.75)),
+                  ),
+                  const Gap(20),
+                  Text(
+                    '(50 reviews)',
+                    style: GoogleFonts.nunitoSans(
+                        textStyle: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                            color: lightGray,
+                            height: 1.75)),
+                  ),
+                ],
               ),
-              const Gap(5),
+              const Gap(10),
               Text(
-                '4.5',
+                'Minimal Stand is made of by natural wood. The design that is very simple and minimal. This is truly one of the best furnitures in any family for now. With 3 different colors, you can easily select the best match for your home.',
+                textAlign: TextAlign.justify,
                 style: GoogleFonts.nunitoSans(
                     textStyle: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18,
-                        color: black,
-                        height: 1.75)),
-              ),
-              const Gap(20),
-              Text(
-                '(50 reviews)',
-                style: GoogleFonts.nunitoSans(
-                    textStyle: const TextStyle(
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w300,
                         fontSize: 14,
-                        color: lightGray,
+                        color: gray,
                         height: 1.75)),
               ),
             ],
           ),
-          const Gap(10),
-          Text(
-            'Minimal Stand is made of by natural wood. The design that is very simple and minimal. This is truly one of the best furnitures in any family for now. With 3 different colors, you can easily select the best match for your home.',
-            textAlign: TextAlign.justify,
-            style: GoogleFonts.nunitoSans(
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.w300,
-                    fontSize: 14,
-                    color: gray,
-                    height: 1.75)),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
