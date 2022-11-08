@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_ecommerce_app/core/styles.dart';
 import 'package:furniture_ecommerce_app/features/bottom_navbar/bloc/bottom_navbar_bloc.dart';
 
+const List<String> bottomNavbarURLs = ["/home", "/favorites", "/home", "/home"];
+
 class BottomNavbar extends StatelessWidget {
   const BottomNavbar({Key? key}) : super(key: key);
 
@@ -15,8 +17,11 @@ class BottomNavbar extends StatelessWidget {
             showSelectedLabels: false,
             showUnselectedLabels: false,
             currentIndex: state.selectedIndex,
-            onTap: ((value) => BlocProvider.of<BottomNavbarBloc>(context)
-                .add(BottomNavbarSelectEvent(selectedIndex: value))),
+            onTap: ((value) {
+              BlocProvider.of<BottomNavbarBloc>(context)
+                  .add(BottomNavbarSelectEvent(selectedIndex: value));
+              Navigator.pushNamed(context, bottomNavbarURLs[value]);
+            }),
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                   label: 'home',

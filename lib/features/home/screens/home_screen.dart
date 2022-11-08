@@ -31,7 +31,10 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                     children: const [
                       Gap(60),
-                      TopBar(),
+                      TopBar(
+                        topHeader: 'Make home',
+                        bottomHeader: 'BEAUTIFUL',
+                      ),
                       Gap(25),
                       CategoryBar(),
                       Gap(25),

@@ -4,7 +4,11 @@ import 'package:furniture_ecommerce_app/core/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TopBar extends StatelessWidget {
-  const TopBar({Key? key}) : super(key: key);
+  final String? topHeader;
+  final String bottomHeader;
+
+  const TopBar({Key? key, this.topHeader, required this.bottomHeader})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,16 +20,18 @@ class TopBar extends StatelessWidget {
           SvgPicture.asset('assets/images/home/search_icon.svg'),
           Column(
             children: [
+              topHeader != null
+                  ? Text(
+                      topHeader!,
+                      style: GoogleFonts.gelasio(
+                          textStyle: const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 18,
+                              color: lighterGray)),
+                    )
+                  : Container(),
               Text(
-                'Make home',
-                style: GoogleFonts.gelasio(
-                    textStyle: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 18,
-                        color: lighterGray)),
-              ),
-              Text(
-                'BEAUTIFUL',
+                bottomHeader,
                 style: GoogleFonts.gelasio(
                     textStyle: const TextStyle(
                         fontWeight: FontWeight.bold,
