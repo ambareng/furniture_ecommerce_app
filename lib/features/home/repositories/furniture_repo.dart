@@ -47,4 +47,21 @@ class FurnitureRepo {
     }
     return null;
   }
+
+  Future<Furniture?> toggleBookmark(
+      {required String accessToken, required int furnitureId}) async {
+    try {
+      final res = await post(
+          Uri.parse(
+              '${dotenv.env['BACKEND_BASE_URL']!}v1/api/furnitures/$furnitureId/toggle_bookmark/'),
+          headers: {'Authorization': 'Bearer $accessToken'});
+      if (res.statusCode == 200) {
+        final resJson = jsonDecode(res.body);
+        return Furniture.fromJson(resJson);
+      }
+    } catch (err) {
+      debugPrint('$err');
+    }
+    return null;
+  }
 }

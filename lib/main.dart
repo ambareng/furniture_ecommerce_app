@@ -12,6 +12,7 @@ import 'package:furniture_ecommerce_app/features/favorites/screens/favorites_scr
 import 'package:furniture_ecommerce_app/features/furniture/bloc/furniture_bloc.dart';
 import 'package:furniture_ecommerce_app/features/furniture/bloc/furniture_order_quantity_bloc.dart';
 import 'package:furniture_ecommerce_app/features/furniture/screens/furniture_screen.dart';
+import 'package:furniture_ecommerce_app/features/home/repositories/furniture_repo.dart';
 import 'package:furniture_ecommerce_app/features/home/screens/home_screen.dart';
 import 'package:furniture_ecommerce_app/features/onboarding/screens/onboarding_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,6 +35,9 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) => AuthRepo(),
         ),
+        RepositoryProvider(
+          create: (context) => FurnitureRepo(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -42,7 +46,10 @@ class MyApp extends StatelessWidget {
                 AuthBloc(authRepo: RepositoryProvider.of<AuthRepo>(context))
                   ..add(AuthLoadAuthenticationEvent()),
           ),
-          BlocProvider(create: (context) => FurnitureBloc()),
+          BlocProvider(
+              create: (context) => FurnitureBloc(
+                  repo: RepositoryProvider.of<FurnitureRepo>(context),
+                  authRepo: RepositoryProvider.of<AuthRepo>(context))),
           BlocProvider(create: (context) => FurnitureOrderQuantityBloc()),
           BlocProvider(create: ((context) => BottomNavbarBloc()))
         ],

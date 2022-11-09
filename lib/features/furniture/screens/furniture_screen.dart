@@ -114,20 +114,34 @@ class BookmarkButton extends StatelessWidget {
     return BlocBuilder<FurnitureBloc, FurnitureState>(
       builder: (context, state) {
         return GestureDetector(
-          onTap: () {},
+          onTap: state.status == FurnitureStatus.bookmarkLoading
+              ? null
+              : () {
+                  BlocProvider.of<FurnitureBloc>(context).add(
+                      FurnitureToggleBookmarkEvent(
+                          furniture: state.furniture!));
+                },
           child: Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-                color: whiteGray, borderRadius: BorderRadius.circular(10)),
-            child: Icon(
-              state.furniture!.isBookmarked
-                  ? Icons.bookmark_rounded
-                  : Icons.bookmark_border_rounded,
-              color: black,
-              size: 24,
-            ),
-          ),
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                  color: whiteGray, borderRadius: BorderRadius.circular(10)),
+              child: state.status == FurnitureStatus.bookmarkLoading
+                  ? Transform.scale(
+                      scale: 0.5,
+                      child: const Center(
+                        child: CircularProgressIndicator(
+                          color: black,
+                        ),
+                      ),
+                    )
+                  : Icon(
+                      state.furniture!.isBookmarked
+                          ? Icons.bookmark_rounded
+                          : Icons.bookmark_border_rounded,
+                      color: black,
+                      size: 24,
+                    )),
         );
       },
     );
