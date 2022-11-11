@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:furniture_ecommerce_app/core/auth/bloc/auth_bloc.dart';
 import 'package:furniture_ecommerce_app/core/auth/repositories/auth_repo.dart';
 import 'package:furniture_ecommerce_app/core/auth/screens/auth_loading_screen.dart';
+import 'package:furniture_ecommerce_app/core/loading/screens/loading_screen.dart';
 import 'package:furniture_ecommerce_app/features/auth/screens/login_screen.dart';
 import 'package:furniture_ecommerce_app/features/auth/screens/signup_screen.dart';
 import 'package:furniture_ecommerce_app/features/bottom_navbar/bloc/bottom_navbar_bloc.dart';
@@ -67,6 +68,7 @@ class MyApp extends StatelessWidget {
               '/home': (context) => const HomeScreen(),
               '/furniture': (context) => const FurnitureScreen(),
               '/favorites': (context) => const FavoritesScreen(),
+              '/loading': (context) => const LoadingScreen(),
             }),
       ),
     );

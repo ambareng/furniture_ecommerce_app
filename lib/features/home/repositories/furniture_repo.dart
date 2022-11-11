@@ -64,4 +64,17 @@ class FurnitureRepo {
     }
     return null;
   }
+
+  Future<Furniture?> getFurniture(
+      {required String accessToken, required int furnitureId}) async {
+    final res = await get(
+        Uri.parse(
+            '${dotenv.env['BACKEND_BASE_URL']!}v1/api/furnitures/$furnitureId/'),
+        headers: {'Authorization': 'Bearer $accessToken'});
+    if (res.statusCode == 200) {
+      final resJson = jsonDecode(res.body);
+      return Furniture.fromJson(resJson);
+    }
+    return null;
+  }
 }

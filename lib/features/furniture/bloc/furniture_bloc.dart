@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:furniture_ecommerce_app/core/auth/repositories/auth_repo.dart';
 import 'package:furniture_ecommerce_app/features/home/models/furniture.dart';
 import 'package:furniture_ecommerce_app/features/home/repositories/furniture_repo.dart';
@@ -14,9 +15,17 @@ class FurnitureBloc extends Bloc<FurnitureEvent, FurnitureState> {
   FurnitureBloc({required this.repo, required this.authRepo})
       : super(const FurnitureState(status: FurnitureStatus.loaded)) {
     on<FurnitureSelectedEvent>(
-      (event, emit) {
-        emit(FurnitureState(
-            status: FurnitureStatus.loaded, furniture: event.furniture));
+      (event, emit) async {
+        emit(const FurnitureState(status: FurnitureStatus.loading));
+        final String? accessToken = await authRepo.getAccessToken();
+        if (accessToken != null) {
+          final Furniture? furniture = await repo.getFurniture(
+              accessToken: accessToken, furnitureId: event.furniture.id);
+          if (furniture != null) {
+            emit(FurnitureState(
+                status: FurnitureStatus.loaded, furniture: furniture));
+          }
+        }
       },
     );
     on<FurnitureToggleBookmarkEvent>((event, emit) async {

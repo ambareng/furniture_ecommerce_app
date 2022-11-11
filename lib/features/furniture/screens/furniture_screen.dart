@@ -12,51 +12,78 @@ class FurnitureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FurnitureBloc, FurnitureState>(
-      builder: (context, state) {
-        return Scaffold(
-            floatingActionButton: const AddToCartStickBar(),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-            body: SingleChildScrollView(
-              child: Column(
+        builder: (context, state) {
+      // if (state.status == FurnitureStatus.loading) {
+      //   return const Scaffold(
+      //     body: Center(
+      //       child: CircularProgressIndicator(
+      //         color: lightestGray,
+      //       ),
+      //     ),
+      //   );
+      // }
+      // if (state.status == FurnitureStatus.loaded ||
+      //     state.status == FurnitureStatus.bookmarkLoading) {
+      return Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Stack(
                 children: [
-                  Stack(
-                    children: [
-                      Align(
-                          alignment: Alignment.topRight,
-                          child: state.furniture != null
-                              ? Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.85,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.55,
-                                  decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.only(
-                                          bottomLeft: Radius.circular(50)),
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                              state.furniture!.imageURL),
-                                          fit: BoxFit.cover)))
-                              : Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.85,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.6,
-                                  decoration: const BoxDecoration(
-                                    color: lighterGray,
-                                    borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(50)),
-                                  ))),
-                      const BackButton(),
-                      const ColorSelector(),
-                    ],
-                  ),
-                  const FurnitureDetails(),
+                  Align(
+                      alignment: Alignment.topRight,
+                      child: state.furniture != null
+                          ? Container(
+                              width: MediaQuery.of(context).size.width * 0.85,
+                              height: MediaQuery.of(context).size.height * 0.55,
+                              decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.only(
+                                      bottomLeft: Radius.circular(50)),
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                          state.furniture!.imageURL),
+                                      fit: BoxFit.cover)))
+                          : Container(
+                              width: MediaQuery.of(context).size.width * 0.85,
+                              height: MediaQuery.of(context).size.height * 0.6,
+                              decoration: const BoxDecoration(
+                                color: lighterGray,
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(50)),
+                              ))),
+                  const BackButton(),
+                  const ColorSelector(),
                 ],
               ),
-            ));
-      },
-    );
+              const FurnitureDetails(),
+            ],
+          ),
+        ),
+        floatingActionButton: const AddToCartStickBar(),
+        floatingActionButtonAnimator: NoScalingAnimation(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      );
+    }
+        // return Container();
+        );
+  }
+}
+
+class NoScalingAnimation extends FloatingActionButtonAnimator {
+  @override
+  Offset getOffset(
+      {required Offset begin, required Offset end, required double progress}) {
+    return end;
+  }
+
+  @override
+  Animation<double> getRotationAnimation({required Animation<double> parent}) {
+    return Tween<double>(begin: 1.0, end: 1.5).animate(parent);
+  }
+
+  @override
+  Animation<double> getScaleAnimation({required Animation<double> parent}) {
+    return Tween<double>(begin: 1.0, end: 1.0).animate(parent);
   }
 }
 

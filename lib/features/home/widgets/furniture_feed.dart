@@ -48,20 +48,6 @@ class FurnitureFeed extends HookWidget {
                       furniture: state.furnitures[index],
                     );
                   }),
-              onNotification: (notification) {
-                // double maxScrollLength =
-                //     scrollController.position.maxScrollExtent;
-                // double currentScrollPosition = scrollController.position.pixels;
-                // double scrollLengthTrigger = 0.00;
-
-                // if ((maxScrollLength - currentScrollPosition) ==
-                //     scrollLengthTrigger) {
-                //   BlocProvider.of<CategoryBarBloc>(context).add(
-                //       CategoryBarOnScrollEvent(
-                //           furnitures: state.furnitures, index: state.index));
-                // }
-                return true;
-              },
             ),
           );
         } else if (state is CategoryBarLoadingState) {
@@ -92,7 +78,8 @@ class FurnitureCard extends StatelessWidget {
             .add(FurnitureSelectedEvent(furniture: furniture));
         BlocProvider.of<FurnitureOrderQuantityBloc>(context)
             .add(FurnitureOrderQuantityResetEvent());
-        Navigator.pushNamed(context, '/furniture');
+        Navigator.pushNamed(context, '/loading',
+            arguments: {'toLoadURL': '/furniture'});
       },
       child: SizedBox(
         width: 155,
