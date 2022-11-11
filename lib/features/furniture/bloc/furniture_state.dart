@@ -16,3 +16,12 @@ class FurnitureState extends Equatable {
     return 'FurnitureState: $status-${furniture?.name}';
   }
 }
+
+class FurnitureListState extends FurnitureState {
+  final List<Furniture>? furnitures;
+
+  const FurnitureListState({required super.status, this.furnitures});
+
+  @override
+  List<Object?> get props => [status, furniture, furnitures];
+}

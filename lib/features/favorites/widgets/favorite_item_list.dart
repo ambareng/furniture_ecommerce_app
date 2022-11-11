@@ -1,28 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:furniture_ecommerce_app/core/styles.dart';
+import 'package:furniture_ecommerce_app/features/furniture/bloc/furniture_bloc.dart';
+import 'package:furniture_ecommerce_app/features/home/models/furniture.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class FavoriteItemList extends StatelessWidget {
+class FavoriteItemList extends HookWidget {
   const FavoriteItemList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    useEffect(() {
+      BlocProvider.of<FurnitureBloc>(context)
+          .add(FurnitureGetBookmarkedEvent());
+    });
+
     return Expanded(
-      child: ListView.builder(
-          padding: const EdgeInsets.only(top: 25, bottom: 125),
-          itemCount: 12,
-          itemBuilder: (context, index) {
-            return const FavoriteItem();
-          }),
+      child: BlocBuilder<FurnitureBloc, FurnitureState>(
+        builder: (context, state) {
+          if (state.status == FurnitureStatus.loading) {
+            return const Center(
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 100.0),
+                child: CircularProgressIndicator(
+                  color: lightestGray,
+                ),
+              ),
+            );
+          }
+          if (state is FurnitureListState) {
+            return ListView.builder(
+                padding: const EdgeInsets.only(top: 25, bottom: 125),
+                itemCount:
+                    state.furnitures != null ? state.furnitures!.length : 0,
+                itemBuilder: (context, index) {
+                  if (state.furnitures != null) {
+                    return FavoriteItem(furniture: state.furnitures![index]);
+                  }
+                  return Container();
+                });
+          }
+          return Container();
+        },
+      ),
     );
   }
 }
 
 class FavoriteItem extends StatelessWidget {
-  const FavoriteItem({
-    Key? key,
-  }) : super(key: key);
+  final Furniture furniture;
+
+  const FavoriteItem({Key? key, required this.furniture}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +63,15 @@ class FavoriteItem extends StatelessWidget {
           border: Border(bottom: BorderSide(width: 2, color: whiteGray))),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          FavoriteItemImage(),
-          FavoriteItemDetails(),
-          FavoriteItemActions()
+        children: [
+          FavoriteItemImage(
+            furnitureImage: NetworkImage(furniture.imageURL),
+          ),
+          FavoriteItemDetails(
+            furnitureName: furniture.name,
+            furniturePrice: furniture.price,
+          ),
+          const FavoriteItemActions()
         ],
       ),
     );
@@ -110,9 +145,12 @@ class FavoriteItemDeleteButton extends StatelessWidget {
 }
 
 class FavoriteItemDetails extends StatelessWidget {
-  const FavoriteItemDetails({
-    Key? key,
-  }) : super(key: key);
+  final String furnitureName;
+  final double furniturePrice;
+
+  const FavoriteItemDetails(
+      {Key? key, required this.furnitureName, required this.furniturePrice})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -123,14 +161,14 @@ class FavoriteItemDetails extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Coffee Table',
+              furnitureName,
               style: GoogleFonts.nunitoSans(
                   textStyle: const TextStyle(
                       fontWeight: FontWeight.w600, fontSize: 14, color: gray)),
             ),
             const Gap(7.5),
             Text(
-              '\$ 50.00',
+              '\$ $furniturePrice',
               style: GoogleFonts.nunitoSans(
                   textStyle: const TextStyle(
                       fontWeight: FontWeight.w700, fontSize: 16, color: black)),
@@ -143,9 +181,10 @@ class FavoriteItemDetails extends StatelessWidget {
 }
 
 class FavoriteItemImage extends StatelessWidget {
-  const FavoriteItemImage({
-    Key? key,
-  }) : super(key: key);
+  final NetworkImage furnitureImage;
+
+  const FavoriteItemImage({Key? key, required this.furnitureImage})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -155,9 +194,7 @@ class FavoriteItemImage extends StatelessWidget {
       height: 100,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          image: const DecorationImage(
-              image: NetworkImage(
-                  'https://ae01.alicdn.com/kf/Hf5625dadb50549f6a9f25bc7cab9d1afc/Modern-Dinning-Chairs-Single-Lounge-Chair-Cafe-Office-Restaurant-Furniture-Bedroom-Study-Nordic-Minimalist-Chair-Sofa.jpg'))),
+          image: DecorationImage(image: furnitureImage, fit: BoxFit.cover)),
     );
   }
 }

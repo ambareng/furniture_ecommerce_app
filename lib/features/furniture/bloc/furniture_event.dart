@@ -24,3 +24,5 @@ class FurnitureToggleBookmarkEvent extends FurnitureEvent {
   @override
   List<Object> get props => [furniture];
 }
+
+class FurnitureGetBookmarkedEvent extends FurnitureEvent {}

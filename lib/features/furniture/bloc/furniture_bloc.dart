@@ -41,5 +41,18 @@ class FurnitureBloc extends Bloc<FurnitureEvent, FurnitureState> {
         }
       }
     });
+    on<FurnitureGetBookmarkedEvent>((event, emit) async {
+      emit(const FurnitureState(status: FurnitureStatus.loading));
+      final String? accessToken = await authRepo.getAccessToken();
+      if (accessToken != null) {
+        final List<Furniture>? bookmarkedFurnitures =
+            await repo.getBookmarkedFurnitures(accessToken: accessToken);
+        if (bookmarkedFurnitures != null) {
+          emit(FurnitureListState(
+              status: FurnitureStatus.loaded,
+              furnitures: bookmarkedFurnitures));
+        }
+      }
+    });
   }
 }
