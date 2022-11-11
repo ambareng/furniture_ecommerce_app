@@ -26,3 +26,14 @@ class FurnitureToggleBookmarkEvent extends FurnitureEvent {
 }
 
 class FurnitureGetBookmarkedEvent extends FurnitureEvent {}
+
+class FurnitureRemoveFromBookmarkEvent extends FurnitureEvent {
+  final List<Furniture> furnitures;
+  final int furnitureId;
+
+  const FurnitureRemoveFromBookmarkEvent(
+      {required this.furnitureId, required this.furnitures});
+
+  @override
+  List<Object> get props => [furnitureId, furnitures];
+}

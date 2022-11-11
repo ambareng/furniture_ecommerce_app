@@ -71,7 +71,9 @@ class FavoriteItem extends StatelessWidget {
             furnitureName: furniture.name,
             furniturePrice: furniture.price,
           ),
-          const FavoriteItemActions()
+          FavoriteItemActions(
+            furniture: furniture,
+          )
         ],
       ),
     );
@@ -79,19 +81,22 @@ class FavoriteItem extends StatelessWidget {
 }
 
 class FavoriteItemActions extends StatelessWidget {
-  const FavoriteItemActions({
-    Key? key,
-  }) : super(key: key);
+  final Furniture furniture;
+
+  const FavoriteItemActions({Key? key, required this.furniture})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 5, right: 10),
       child: Column(
-        children: const [
-          FavoriteItemDeleteButton(),
-          Spacer(),
-          FavoriteItemAddCartButton()
+        children: [
+          FavoriteItemDeleteButton(
+            furniture: furniture,
+          ),
+          const Spacer(),
+          const FavoriteItemAddCartButton()
         ],
       ),
     );
@@ -123,23 +128,38 @@ class FavoriteItemAddCartButton extends StatelessWidget {
 }
 
 class FavoriteItemDeleteButton extends StatelessWidget {
-  const FavoriteItemDeleteButton({
-    Key? key,
-  }) : super(key: key);
+  final Furniture furniture;
+
+  const FavoriteItemDeleteButton({Key? key, required this.furniture})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 24,
-      height: 24,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(50),
-        border: Border.all(color: bgBlack),
-      ),
-      child: const Icon(
-        Icons.close_rounded,
-        size: 17,
-      ),
+    return BlocBuilder<FurnitureBloc, FurnitureState>(
+      builder: (context, state) {
+        return GestureDetector(
+          onTap: () {
+            if (state is FurnitureListState) {
+              BlocProvider.of<FurnitureBloc>(context).add(
+                  FurnitureRemoveFromBookmarkEvent(
+                      furnitureId: furniture.id,
+                      furnitures: state.furnitures!));
+            }
+          },
+          child: Container(
+            width: 24,
+            height: 24,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              border: Border.all(color: bgBlack),
+            ),
+            child: const Icon(
+              Icons.close_rounded,
+              size: 17,
+            ),
+          ),
+        );
+      },
     );
   }
 }
