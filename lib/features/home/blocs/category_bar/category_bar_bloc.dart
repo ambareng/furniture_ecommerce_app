@@ -18,21 +18,24 @@ class CategoryBarBloc extends Bloc<CategoryBarEvent, CategoryBarState> {
       emit(CategoryBarLoadingState(
           index: event.index, category: event.category));
       late List<Furniture>? furnitures;
-      final String accessToken = await authRepo.getAccessToken() as String;
-      if (event.category != null) {
-        furnitures = await furnitureRepo.getFurnituresByCategory(
-            category: event.category!, accessToken: accessToken);
-      } else {
-        furnitures =
-            await furnitureRepo.getAllFurnitures(accessToken: accessToken);
-      }
-      if (furnitures != null) {
-        emit(CategoryBarSelectedState(
-            index: event.index,
-            category: event.category,
-            furnitures: furnitures));
-      } else {
-        emit(const CategoryBarErrorState(error: 'Unable to load furnitures!'));
+      final String? accessToken = await authRepo.getAccessToken();
+      if (accessToken != null) {
+        if (event.category != null) {
+          furnitures = await furnitureRepo.getFurnituresByCategory(
+              category: event.category!, accessToken: accessToken);
+        } else {
+          furnitures =
+              await furnitureRepo.getAllFurnitures(accessToken: accessToken);
+        }
+        if (furnitures != null) {
+          emit(CategoryBarSelectedState(
+              index: event.index,
+              category: event.category,
+              furnitures: furnitures));
+        } else {
+          emit(
+              const CategoryBarErrorState(error: 'Unable to load furnitures!'));
+        }
       }
     });
   }

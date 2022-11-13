@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
@@ -8,8 +7,46 @@ import 'package:http/http.dart';
 class AuthRepo {
   final storage = const FlutterSecureStorage();
 
+  Future<bool> _checkIfAccessTokenValid({required String accessToken}) async {
+    final Response res = await post(
+        Uri.parse(
+            '${dotenv.env['BACKEND_BASE_URL']!}v1/api/auth/token/verify/'),
+        body: {"token": accessToken});
+    if (res.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
+
+  Future<String?> _refreshToken({required String refreshToken}) async {
+    final Response res = await post(
+        Uri.parse(
+            '${dotenv.env['BACKEND_BASE_URL']!}v1/api/auth/token/refresh/'),
+        body: {"refresh": refreshToken});
+    if (res.statusCode == 200) {
+      final Map<String, dynamic> resJson = jsonDecode(res.body);
+      return resJson['access'];
+    }
+    return null;
+  }
+
   Future<String?> getAccessToken() async {
-    return await storage.read(key: 'accessToken');
+    final String? accessToken = await storage.read(key: 'accessToken');
+    if (accessToken != null) {
+      if (await _checkIfAccessTokenValid(accessToken: accessToken)) {
+        return accessToken;
+      }
+      final String? refreshToken = await getRefreshToken();
+      if (refreshToken != null) {
+        final String? newAccessToken =
+            await _refreshToken(refreshToken: refreshToken);
+        if (newAccessToken != null) {
+          await storage.write(key: 'accessToken', value: newAccessToken);
+          return newAccessToken;
+        }
+      }
+    }
+    return null;
   }
 
   Future<String?> getRefreshToken() async {
