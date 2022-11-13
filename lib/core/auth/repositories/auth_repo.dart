@@ -37,4 +37,23 @@ class AuthRepo {
       return {};
     }
   }
+
+  Future<Response> register(
+      {required String email,
+      required String password,
+      required String confirmPassword,
+      required String firstName,
+      required String lastName}) async {
+    final payload = {
+      'email': email,
+      'first_name': firstName,
+      'last_name': lastName,
+      'password': password,
+      'confirm_password': confirmPassword
+    };
+    final res = await post(
+        Uri.parse('${dotenv.env['BACKEND_BASE_URL']!}v1/api/auth/register/'),
+        body: payload);
+    return res;
+  }
 }

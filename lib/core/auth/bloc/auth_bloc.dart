@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:furniture_ecommerce_app/core/auth/repositories/auth_repo.dart';
+import 'package:http/http.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -41,6 +44,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } catch (err) {
         emit(const AuthErrorState(
             errorList: {'error': 'Something went wrong!'}));
+      }
+    });
+    on<AuthRegisterEvent>((event, emit) async {
+      emit(AuthAuthenticatingState());
+      final Response res = await authRepo.register(
+          email: event.email,
+          password: event.password,
+          confirmPassword: event.confirmPassword,
+          firstName: event.firstName,
+          lastName: event.lastName);
+      if (res.statusCode == 201) {
+        final resJson = jsonDecode(res.body);
+        await authRepo.saveTokens(
+            accessToken: resJson['access'], refreshToken: resJson['refresh']);
+        emit(AuthAuthenticatedState(
+            accessToken: resJson['access'], refreshToken: resJson['refresh']));
+      } else {
+        emit(AuthErrorState(errorList: jsonDecode(res.body)));
       }
     });
   }

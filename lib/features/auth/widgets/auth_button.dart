@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:furniture_ecommerce_app/core/auth/bloc/auth_bloc.dart';
 import 'package:furniture_ecommerce_app/core/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -11,17 +13,33 @@ class AuthButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: callback,
-      style: ElevatedButton.styleFrom(
-          backgroundColor: bgBlack,
-          fixedSize: Size(MediaQuery.of(context).size.width * 0.7, 50)),
-      child: Text(
-        buttonText,
-        style: GoogleFonts.nunitoSans(
-          textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
-        ),
-      ),
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        return ElevatedButton(
+          onPressed: callback,
+          style: ElevatedButton.styleFrom(
+              backgroundColor: bgBlack,
+              fixedSize: Size(MediaQuery.of(context).size.width * 0.7, 50)),
+          child: state is AuthAuthenticatingState
+              ? const Center(
+                  child: SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 1.5,
+                    ),
+                  ),
+                )
+              : Text(
+                  buttonText,
+                  style: GoogleFonts.nunitoSans(
+                    textStyle: const TextStyle(
+                        fontWeight: FontWeight.w600, fontSize: 18),
+                  ),
+                ),
+        );
+      },
     );
   }
 }
