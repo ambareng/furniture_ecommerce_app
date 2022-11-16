@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_ecommerce_app/core/auth/repositories/auth_repo.dart';
+import 'package:furniture_ecommerce_app/core/utils.dart';
 import 'package:furniture_ecommerce_app/features/bottom_navbar/widgets/bottom_navbar.dart';
 import 'package:furniture_ecommerce_app/features/home/blocs/category_bar/category_bar_bloc.dart';
 import 'package:furniture_ecommerce_app/features/home/repositories/furniture_repo.dart';
@@ -21,27 +22,30 @@ class HomeScreen extends StatelessWidget {
             furnitureRepo: RepositoryProvider.of<FurnitureRepo>(context),
             authRepo: RepositoryProvider.of<AuthRepo>(context))
           ..add(const CategoryBarSelectedEvent(index: 0)),
-        child: Scaffold(
-            bottomNavigationBar: const BottomNavbar(),
-            body: SingleChildScrollView(
-              child: Container(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height,
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    children: const [
-                      Gap(60),
-                      TopBar(
-                        topHeader: 'Make home',
-                        bottomHeader: 'BEAUTIFUL',
-                      ),
-                      Gap(25),
-                      CategoryBar(),
-                      Gap(25),
-                      FurnitureFeed()
-                    ],
-                  )),
-            )),
+        child: WillPopScope(
+          onWillPop: () => exitAppDialog(context: context),
+          child: Scaffold(
+              bottomNavigationBar: const BottomNavbar(),
+              body: SingleChildScrollView(
+                child: Container(
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: const [
+                        Gap(60),
+                        TopBar(
+                          topHeader: 'Make home',
+                          bottomHeader: 'BEAUTIFUL',
+                        ),
+                        Gap(25),
+                        CategoryBar(),
+                        Gap(25),
+                        FurnitureFeed()
+                      ],
+                    )),
+              )),
+        ),
       ),
     );
   }

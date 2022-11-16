@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:furniture_ecommerce_app/core/auth/bloc/auth_bloc.dart';
 import 'package:furniture_ecommerce_app/core/styles.dart';
+import 'package:furniture_ecommerce_app/core/utils.dart';
 import 'package:furniture_ecommerce_app/features/auth/widgets/auth_bar.dart';
 import 'package:furniture_ecommerce_app/features/auth/widgets/login_form.dart';
 import 'package:gap/gap.dart';
@@ -16,7 +17,7 @@ class LoginScreen extends HookWidget {
     return Scaffold(body: BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         return WillPopScope(
-          onWillPop: () async => state is! AuthAuthenticatingState,
+          onWillPop: () => exitAppDialog(context: context),
           child: Container(
             padding: EdgeInsets.symmetric(
                 horizontal: MediaQuery.of(context).size.width * 0.075),

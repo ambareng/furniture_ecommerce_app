@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_ecommerce_app/core/styles.dart';
+import 'package:furniture_ecommerce_app/core/utils.dart';
 import 'package:furniture_ecommerce_app/features/furniture/bloc/furniture_bloc.dart';
 
 class LoadingScreen extends StatelessWidget {
@@ -18,18 +19,21 @@ class LoadingScreen extends StatelessWidget {
       toLoadURL = '/home';
     }
 
-    return Scaffold(
-        body: Center(
-      child: BlocListener<FurnitureBloc, FurnitureState>(
-        listener: (context, state) {
-          if (state.status == FurnitureStatus.loaded) {
-            Navigator.popAndPushNamed(context, toLoadURL);
-          }
-        },
-        child: const CircularProgressIndicator(
-          color: lightestGray,
+    return WillPopScope(
+      onWillPop: () => exitAppDialog(context: context),
+      child: Scaffold(
+          body: Center(
+        child: BlocListener<FurnitureBloc, FurnitureState>(
+          listener: (context, state) {
+            if (state.status == FurnitureStatus.loaded) {
+              Navigator.popAndPushNamed(context, toLoadURL);
+            }
+          },
+          child: const CircularProgressIndicator(
+            color: lightestGray,
+          ),
         ),
-      ),
-    ));
+      )),
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furniture_ecommerce_app/core/styles.dart';
+import 'package:furniture_ecommerce_app/core/utils.dart';
 import 'package:gap/gap.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -7,37 +8,40 @@ class OnboardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-            height: MediaQuery.of(context).size.height,
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * 0.05),
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image:
-                        AssetImage('assets/images/onboarding/onboarding.png'),
-                    fit: BoxFit.cover)),
-            child: Column(
-              children: [
-                Expanded(
-                    child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Gap(250),
-                      OnboardingTitleText(),
-                      Gap(35),
-                      OnboardingText(),
-                      Gap(175),
-                      GetStartedButton()
-                    ],
-                  ),
-                )),
-              ],
-            )));
+    return WillPopScope(
+      onWillPop: () => exitAppDialog(context: context),
+      child: Scaffold(
+          body: Container(
+              height: MediaQuery.of(context).size.height,
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * 0.05),
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image:
+                          AssetImage('assets/images/onboarding/onboarding.png'),
+                      fit: BoxFit.cover)),
+              child: Column(
+                children: [
+                  Expanded(
+                      child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        Gap(250),
+                        OnboardingTitleText(),
+                        Gap(35),
+                        OnboardingText(),
+                        Gap(175),
+                        GetStartedButton()
+                      ],
+                    ),
+                  )),
+                ],
+              ))),
+    );
   }
 }
 
