@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:furniture_ecommerce_app/core/auth/repositories/auth_repo.dart';
 import 'package:furniture_ecommerce_app/core/utils.dart';
+import 'package:furniture_ecommerce_app/features/bottom_navbar/bloc/bottom_navbar_bloc.dart';
 import 'package:furniture_ecommerce_app/features/bottom_navbar/widgets/bottom_navbar.dart';
 import 'package:furniture_ecommerce_app/features/home/blocs/category_bar/category_bar_bloc.dart';
 import 'package:furniture_ecommerce_app/features/home/repositories/furniture_repo.dart';
@@ -10,11 +12,17 @@ import 'package:furniture_ecommerce_app/features/home/widgets/furniture_feed.dar
 import 'package:furniture_ecommerce_app/features/home/widgets/top_bar.dart';
 import 'package:gap/gap.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends HookWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    useEffect(() {
+      BlocProvider.of<BottomNavbarBloc>(context)
+          .add(const BottomNavbarSelectEvent(selectedIndex: 0));
+      return () {};
+    }, []);
+
     return RepositoryProvider(
       create: (context) => FurnitureRepo(),
       child: BlocProvider(

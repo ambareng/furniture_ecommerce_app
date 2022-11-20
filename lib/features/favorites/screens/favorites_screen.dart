@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:furniture_ecommerce_app/core/styles.dart';
+import 'package:furniture_ecommerce_app/features/bottom_navbar/bloc/bottom_navbar_bloc.dart';
 import 'package:furniture_ecommerce_app/features/bottom_navbar/widgets/bottom_navbar.dart';
 import 'package:furniture_ecommerce_app/features/favorites/widgets/favorite_item_list.dart';
 import 'package:gap/gap.dart';
@@ -7,11 +10,17 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../home/widgets/top_bar.dart';
 
-class FavoritesScreen extends StatelessWidget {
+class FavoritesScreen extends HookWidget {
   const FavoritesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    useEffect(() {
+      BlocProvider.of<BottomNavbarBloc>(context)
+          .add(const BottomNavbarSelectEvent(selectedIndex: 1));
+      return () {};
+    }, []);
+
     return Scaffold(
         floatingActionButton: const AddAllCartButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

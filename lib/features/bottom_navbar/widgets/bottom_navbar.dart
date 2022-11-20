@@ -18,8 +18,8 @@ class BottomNavbar extends StatelessWidget {
             showUnselectedLabels: false,
             currentIndex: state.selectedIndex,
             onTap: ((value) {
-              BlocProvider.of<BottomNavbarBloc>(context)
-                  .add(BottomNavbarSelectEvent(selectedIndex: value));
+              // BlocProvider.of<BottomNavbarBloc>(context)
+              //     .add(BottomNavbarSelectEvent(selectedIndex: value));
               Navigator.pushNamed(context, bottomNavbarURLs[value]);
             }),
             items: const <BottomNavigationBarItem>[
