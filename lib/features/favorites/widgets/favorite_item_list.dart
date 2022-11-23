@@ -15,6 +15,7 @@ class FavoriteItemList extends HookWidget {
     useEffect(() {
       BlocProvider.of<FurnitureBloc>(context)
           .add(FurnitureGetBookmarkedEvent());
+      return () {};
     });
 
     return Expanded(
