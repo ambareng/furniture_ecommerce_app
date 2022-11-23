@@ -37,3 +37,14 @@ class FurnitureRemoveFromBookmarkEvent extends FurnitureEvent {
   @override
   List<Object> get props => [furnitureId, furnitures];
 }
+
+class FurnitureAddToCartEvent extends FurnitureEvent {
+  final Furniture furniture;
+  final int quantity;
+
+  const FurnitureAddToCartEvent(
+      {required this.furniture, required this.quantity});
+
+  @override
+  List<Object> get props => [furniture, quantity];
+}

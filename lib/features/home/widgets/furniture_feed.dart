@@ -72,6 +72,8 @@ class FurnitureCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('$furniture');
+
     return GestureDetector(
       onTap: () {
         BlocProvider.of<FurnitureBloc>(context)
@@ -96,14 +98,26 @@ class FurnitureCard extends StatelessWidget {
                         image: NetworkImage(furniture.imageURL),
                         fit: BoxFit.cover)),
               ),
-              Positioned(
-                  right: 0,
-                  bottom: 0,
-                  child: Container(
-                    margin: const EdgeInsets.all(15),
-                    child: SvgPicture.asset(
-                        'assets/images/home/add_to_cart_icon.svg'),
-                  )),
+              // Positioned(
+              //     right: 0,
+              //     bottom: 0,
+              //     child: Container(
+              //       margin: const EdgeInsets.all(10),
+              //       child: Container(
+              //           padding: const EdgeInsets.all(2.5),
+              //           decoration: BoxDecoration(
+              //               borderRadius: BorderRadius.circular(10),
+              //               color: lightestGray),
+              //           child: furniture.isAddedToCart
+              //               ? const Icon(
+              //                   Icons.shopping_bag_rounded,
+              //                   color: black,
+              //                 )
+              //               : const Icon(
+              //                   Icons.shopping_bag_outlined,
+              //                   color: Colors.white,
+              //                 )),
+              //     )),
             ]),
             const Gap(5),
             Padding(

@@ -1,9 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:furniture_ecommerce_app/core/auth/repositories/auth_repo.dart';
 import 'package:furniture_ecommerce_app/features/home/models/furniture.dart';
 import 'package:furniture_ecommerce_app/features/home/repositories/furniture_repo.dart';
+import 'package:http/http.dart';
 
 part 'furniture_event.dart';
 part 'furniture_state.dart';
@@ -64,6 +66,25 @@ class FurnitureBloc extends Bloc<FurnitureEvent, FurnitureState> {
       if (accessToken != null) {
         await repo.toggleBookmark(
             accessToken: accessToken, furnitureId: event.furnitureId);
+      }
+    });
+    on<FurnitureAddToCartEvent>((event, emit) async {
+      final String? accessToken = await authRepo.getAccessToken();
+      if (accessToken != null) {
+        final Response res = await repo.addToCart(
+            accessToken: accessToken,
+            furnitureId: event.furniture.id,
+            quantity: event.quantity);
+        if (res.statusCode == 200) {
+          emit(FurnitureState(
+              status: FurnitureStatus.addedToCart, furniture: event.furniture));
+        } else {
+          debugPrint(res.body);
+          emit(FurnitureState(
+              status: FurnitureStatus.failure, furniture: event.furniture));
+        }
+        emit(FurnitureState(
+            status: FurnitureStatus.loaded, furniture: event.furniture));
       }
     });
   }

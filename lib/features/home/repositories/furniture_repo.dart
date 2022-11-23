@@ -96,4 +96,21 @@ class FurnitureRepo {
     }
     return null;
   }
+
+  Future<Response> addToCart(
+      {required String accessToken,
+      required int furnitureId,
+      required int quantity}) async {
+    final payload = jsonEncode({'quantity': quantity});
+    final res = await post(
+        Uri.parse(
+            '${dotenv.env["BACKEND_BASE_URL"]}v1/api/furnitures/$furnitureId/add_to_cart/'),
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+          'Content-Type': 'application/json'
+        },
+        body: payload);
+    debugPrint(res.body);
+    return res;
+  }
 }

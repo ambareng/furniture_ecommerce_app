@@ -12,6 +12,7 @@ _$_Furniture _$$_FurnitureFromJson(Map<String, dynamic> json) => _$_Furniture(
       price: (json['price'] as num).toDouble(),
       imageURL: json['imageURL'] as String,
       isBookmarked: json['isBookmarked'] as bool,
+      isAddedToCart: json['isAddedToCart'] as bool,
     );
 
 Map<String, dynamic> _$$_FurnitureToJson(_$_Furniture instance) =>
@@ -21,4 +22,5 @@ Map<String, dynamic> _$$_FurnitureToJson(_$_Furniture instance) =>
       'price': instance.price,
       'imageURL': instance.imageURL,
       'isBookmarked': instance.isBookmarked,
+      'isAddedToCart': instance.isAddedToCart,
     };

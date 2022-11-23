@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:furniture_ecommerce_app/core/styles.dart';
 import 'package:furniture_ecommerce_app/features/furniture/bloc/furniture_bloc.dart';
 import 'package:furniture_ecommerce_app/features/furniture/bloc/furniture_order_quantity_bloc.dart';
+import 'package:furniture_ecommerce_app/features/home/models/furniture.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -112,21 +114,49 @@ class AddToCartButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-          height: 60,
-          decoration: BoxDecoration(
-              color: bgBlack, borderRadius: BorderRadius.circular(10)),
-          child: Center(
-            child: Text(
-              'Add to cart',
-              style: GoogleFonts.nunitoSans(
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20,
-                      color: Colors.white)),
-            ),
-          )),
+    return BlocListener<FurnitureBloc, FurnitureState>(
+      listener: (context, state) {
+        if (state.status == FurnitureStatus.addedToCart) {
+          Fluttertoast.showToast(
+              msg:
+                  'Successfully added x${BlocProvider.of<FurnitureOrderQuantityBloc>(context).state.quantity} ${state.furniture?.name} to cart!',
+              gravity: ToastGravity.TOP,
+              toastLength: Toast.LENGTH_LONG);
+        } else if (state.status == FurnitureStatus.failure) {
+          Fluttertoast.showToast(
+              msg: 'Failed adding to cart!',
+              gravity: ToastGravity.TOP,
+              backgroundColor: Colors.red[400]);
+        }
+      },
+      child: Expanded(
+        child: GestureDetector(
+          onTap: () {
+            final Furniture? furniture =
+                BlocProvider.of<FurnitureBloc>(context).state.furniture;
+            final int quantity =
+                BlocProvider.of<FurnitureOrderQuantityBloc>(context)
+                    .state
+                    .quantity;
+            BlocProvider.of<FurnitureBloc>(context).add(FurnitureAddToCartEvent(
+                furniture: furniture!, quantity: quantity));
+          },
+          child: Container(
+              height: 60,
+              decoration: BoxDecoration(
+                  color: bgBlack, borderRadius: BorderRadius.circular(10)),
+              child: Center(
+                child: Text(
+                  'Add to cart',
+                  style: GoogleFonts.nunitoSans(
+                      textStyle: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20,
+                          color: Colors.white)),
+                ),
+              )),
+        ),
+      ),
     );
   }
 }
