@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:furniture_ecommerce_app/core/custom_icon_buttons/cart_icon.dart';
+import 'package:furniture_ecommerce_app/core/custom_icon_buttons/custom_icon_button.dart';
+import 'package:furniture_ecommerce_app/core/custom_icon_buttons/search_icon.dart';
 import 'package:furniture_ecommerce_app/core/styles.dart';
 import 'package:furniture_ecommerce_app/features/bottom_navbar/bloc/bottom_navbar_bloc.dart';
 import 'package:furniture_ecommerce_app/features/bottom_navbar/widgets/bottom_navbar.dart';
@@ -33,7 +36,10 @@ class FavoritesScreen extends HookWidget {
               child: Column(
                 children: const [
                   Gap(60),
-                  TopBar(bottomHeader: 'Favorites'),
+                  TopBar(
+                      leftIcon: SearchIconButton(),
+                      bottomHeader: 'Favorites',
+                      rightIcon: CartIconButton()),
                   FavoriteItemList()
                 ],
               )),

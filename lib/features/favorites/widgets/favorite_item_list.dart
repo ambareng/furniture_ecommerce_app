@@ -95,8 +95,8 @@ class FavoriteItemActions extends StatelessWidget {
           FavoriteItemDeleteButton(
             furniture: furniture,
           ),
-          const Spacer(),
-          const FavoriteItemAddCartButton()
+          // const Spacer(),
+          // const FavoriteItemAddCartButton()
         ],
       ),
     );
