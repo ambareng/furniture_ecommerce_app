@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furniture_ecommerce_app/core/custom_icon_buttons/invisible_icon.dart';
 import 'package:furniture_ecommerce_app/core/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -29,7 +30,7 @@ class TopBar extends StatelessWidget {
           //   icon: const Icon(Icons.search_outlined),
           //   color: lightGray,
           // ),
-          leftIcon ?? Container(),
+          leftIcon ?? const InvisibleIconButton(),
           Column(
             children: [
               topHeader != null
@@ -72,7 +73,7 @@ class TopBar extends StatelessWidget {
           //   ),
           //   color: lightGray,
           // ),
-          rightIcon ?? Container(),
+          rightIcon ?? const InvisibleIconButton(),
         ],
       ),
     );
