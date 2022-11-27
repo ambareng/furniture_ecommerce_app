@@ -10,8 +10,9 @@ class Furniture with _$Furniture {
       required String name,
       required double price,
       required String imageURL,
-      required bool isBookmarked,
-      required bool isAddedToCart}) = _Furniture;
+      @Default(false) bool isBookmarked,
+      @Default(false) bool isAddedToCart,
+      @Default(0) int quantity}) = _Furniture;
 
   factory Furniture.fromJson(Map<String, Object?> json) =>
       _$FurnitureFromJson(json);

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:furniture_ecommerce_app/core/custom_icon_buttons/custom_icon_button.dart';
-import 'package:furniture_ecommerce_app/core/styles.dart';
 
 class InvisibleIconButton extends StatelessWidget {
   const InvisibleIconButton({Key? key}) : super(key: key);

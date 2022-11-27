@@ -83,6 +83,22 @@ class FurnitureRepo {
     return null;
   }
 
+  Future<List<Furniture>?> getMyCartFurnitures(
+      {required String accessToken}) async {
+    final res = await get(
+        Uri.parse(
+            '${dotenv.env["BACKEND_BASE_URL"]!}v1/api/furnitures/my_cart/'),
+        headers: {'Authorization': 'Bearer $accessToken'});
+    if (res.statusCode == 200) {
+      final List<dynamic> listResults = jsonDecode(res.body)['results'];
+      final myCartFurnitures = listResults.map((furniture) {
+        return Furniture.fromJson(furniture);
+      }).toList();
+      return myCartFurnitures;
+    }
+    return null;
+  }
+
   Future<Furniture?> getFurniture(
       {required String accessToken, required int furnitureId}) async {
     final res = await get(

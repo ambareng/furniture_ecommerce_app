@@ -27,6 +27,8 @@ class FurnitureToggleBookmarkEvent extends FurnitureEvent {
 
 class FurnitureGetBookmarkedEvent extends FurnitureEvent {}
 
+class FurnitureGetMyCartEvent extends FurnitureEvent {}
+
 class FurnitureRemoveFromBookmarkEvent extends FurnitureEvent {
   final List<Furniture> furnitures;
   final int furnitureId;

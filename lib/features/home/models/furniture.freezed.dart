@@ -26,6 +26,7 @@ mixin _$Furniture {
   String get imageURL => throw _privateConstructorUsedError;
   bool get isBookmarked => throw _privateConstructorUsedError;
   bool get isAddedToCart => throw _privateConstructorUsedError;
+  int get quantity => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,7 +45,8 @@ abstract class $FurnitureCopyWith<$Res> {
       double price,
       String imageURL,
       bool isBookmarked,
-      bool isAddedToCart});
+      bool isAddedToCart,
+      int quantity});
 }
 
 /// @nodoc
@@ -66,6 +68,7 @@ class _$FurnitureCopyWithImpl<$Res, $Val extends Furniture>
     Object? imageURL = null,
     Object? isBookmarked = null,
     Object? isAddedToCart = null,
+    Object? quantity = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -92,6 +95,10 @@ class _$FurnitureCopyWithImpl<$Res, $Val extends Furniture>
           ? _value.isAddedToCart
           : isAddedToCart // ignore: cast_nullable_to_non_nullable
               as bool,
+      quantity: null == quantity
+          ? _value.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -109,7 +116,8 @@ abstract class _$$_FurnitureCopyWith<$Res> implements $FurnitureCopyWith<$Res> {
       double price,
       String imageURL,
       bool isBookmarked,
-      bool isAddedToCart});
+      bool isAddedToCart,
+      int quantity});
 }
 
 /// @nodoc
@@ -129,6 +137,7 @@ class __$$_FurnitureCopyWithImpl<$Res>
     Object? imageURL = null,
     Object? isBookmarked = null,
     Object? isAddedToCart = null,
+    Object? quantity = null,
   }) {
     return _then(_$_Furniture(
       id: null == id
@@ -155,6 +164,10 @@ class __$$_FurnitureCopyWithImpl<$Res>
           ? _value.isAddedToCart
           : isAddedToCart // ignore: cast_nullable_to_non_nullable
               as bool,
+      quantity: null == quantity
+          ? _value.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -167,8 +180,9 @@ class _$_Furniture implements _Furniture {
       required this.name,
       required this.price,
       required this.imageURL,
-      required this.isBookmarked,
-      required this.isAddedToCart});
+      this.isBookmarked = false,
+      this.isAddedToCart = false,
+      this.quantity = 0});
 
   factory _$_Furniture.fromJson(Map<String, dynamic> json) =>
       _$$_FurnitureFromJson(json);
@@ -182,13 +196,18 @@ class _$_Furniture implements _Furniture {
   @override
   final String imageURL;
   @override
+  @JsonKey()
   final bool isBookmarked;
   @override
+  @JsonKey()
   final bool isAddedToCart;
+  @override
+  @JsonKey()
+  final int quantity;
 
   @override
   String toString() {
-    return 'Furniture(id: $id, name: $name, price: $price, imageURL: $imageURL, isBookmarked: $isBookmarked, isAddedToCart: $isAddedToCart)';
+    return 'Furniture(id: $id, name: $name, price: $price, imageURL: $imageURL, isBookmarked: $isBookmarked, isAddedToCart: $isAddedToCart, quantity: $quantity)';
   }
 
   @override
@@ -204,13 +223,15 @@ class _$_Furniture implements _Furniture {
             (identical(other.isBookmarked, isBookmarked) ||
                 other.isBookmarked == isBookmarked) &&
             (identical(other.isAddedToCart, isAddedToCart) ||
-                other.isAddedToCart == isAddedToCart));
+                other.isAddedToCart == isAddedToCart) &&
+            (identical(other.quantity, quantity) ||
+                other.quantity == quantity));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, name, price, imageURL, isBookmarked, isAddedToCart);
+  int get hashCode => Object.hash(runtimeType, id, name, price, imageURL,
+      isBookmarked, isAddedToCart, quantity);
 
   @JsonKey(ignore: true)
   @override
@@ -232,8 +253,9 @@ abstract class _Furniture implements Furniture {
       required final String name,
       required final double price,
       required final String imageURL,
-      required final bool isBookmarked,
-      required final bool isAddedToCart}) = _$_Furniture;
+      final bool isBookmarked,
+      final bool isAddedToCart,
+      final int quantity}) = _$_Furniture;
 
   factory _Furniture.fromJson(Map<String, dynamic> json) =
       _$_Furniture.fromJson;
@@ -250,6 +272,8 @@ abstract class _Furniture implements Furniture {
   bool get isBookmarked;
   @override
   bool get isAddedToCart;
+  @override
+  int get quantity;
   @override
   @JsonKey(ignore: true)
   _$$_FurnitureCopyWith<_$_Furniture> get copyWith =>

@@ -15,8 +15,7 @@ class MyCartItemList extends HookWidget {
   @override
   Widget build(BuildContext context) {
     useEffect(() {
-      BlocProvider.of<FurnitureBloc>(context)
-          .add(FurnitureGetBookmarkedEvent());
+      BlocProvider.of<FurnitureBloc>(context).add(FurnitureGetMyCartEvent());
       return () {};
     });
 
@@ -105,6 +104,7 @@ class FavoriteItem extends StatelessWidget {
           FavoriteItemDetails(
             furnitureName: furniture.name,
             furniturePrice: furniture.price,
+            furnitureQuantity: furniture.quantity,
           ),
           FavoriteItemActions(
             furniture: furniture,
@@ -202,9 +202,13 @@ class FavoriteItemDeleteButton extends StatelessWidget {
 class FavoriteItemDetails extends StatelessWidget {
   final String furnitureName;
   final double furniturePrice;
+  final int furnitureQuantity;
 
   const FavoriteItemDetails(
-      {Key? key, required this.furnitureName, required this.furniturePrice})
+      {Key? key,
+      required this.furnitureName,
+      required this.furniturePrice,
+      required this.furnitureQuantity})
       : super(key: key);
 
   @override
@@ -229,7 +233,7 @@ class FavoriteItemDetails extends StatelessWidget {
                       fontWeight: FontWeight.w700, fontSize: 16, color: black)),
             ),
             const Spacer(),
-            const QuantityController()
+            QuantityController(quantity: furnitureQuantity)
           ],
         ),
       ),
@@ -238,9 +242,10 @@ class FavoriteItemDetails extends StatelessWidget {
 }
 
 class QuantityController extends StatelessWidget {
-  const QuantityController({
-    Key? key,
-  }) : super(key: key);
+  final int quantity;
+
+  const QuantityController({Key? key, required this.quantity})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -272,8 +277,8 @@ class QuantityController extends StatelessWidget {
             ),
           ),
           Text(
-            // '${state.quantity < 10 ? "0" : ""}${state.quantity}',
-            '01',
+            // '${state.furniture!.quantity < 10 ? "0" : ""}${state.furniture!.quantity}',
+            '$quantity',
             style: GoogleFonts.nunitoSans(
                 textStyle: const TextStyle(
                     fontWeight: FontWeight.w600,
