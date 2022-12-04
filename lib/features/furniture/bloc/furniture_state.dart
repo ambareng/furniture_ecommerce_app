@@ -1,6 +1,13 @@
 part of 'furniture_bloc.dart';
 
-enum FurnitureStatus { loaded, failure, bookmarkLoading, loading, addedToCart }
+enum FurnitureStatus {
+  loaded,
+  failure,
+  bookmarkLoading,
+  loading,
+  addedToCart,
+  myCartRemoveProcessing
+}
 
 class FurnitureState extends Equatable {
   final FurnitureStatus status;

@@ -8,7 +8,6 @@ import 'package:http/http.dart';
 class FurnitureRepo {
   Future<List<Furniture>?> getAllFurnitures(
       {required String accessToken}) async {
-    debugPrint(accessToken);
     try {
       final res = await get(
           Uri.parse('${dotenv.env['BACKEND_BASE_URL']!}v1/api/furnitures/'),
@@ -125,7 +124,18 @@ class FurnitureRepo {
           'Content-Type': 'application/json'
         },
         body: payload);
-    debugPrint(res.body);
+    return res;
+  }
+
+  Future<Response> removeFromCart(
+      {required String accessToken, required int furnitureId}) async {
+    final res = await delete(
+        Uri.parse(
+            '${dotenv.env["BACKEND_BASE_URL"]}v1/api/furnitures/$furnitureId/my_cart_remove/'),
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+          'Content-Type': 'application/json'
+        });
     return res;
   }
 }

@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:furniture_ecommerce_app/core/auth/repositories/auth_repo.dart';
 import 'package:furniture_ecommerce_app/features/home/models/furniture.dart';
 import 'package:furniture_ecommerce_app/features/home/repositories/furniture_repo.dart';
@@ -90,12 +89,28 @@ class FurnitureBloc extends Bloc<FurnitureEvent, FurnitureState> {
           emit(FurnitureState(
               status: FurnitureStatus.addedToCart, furniture: event.furniture));
         } else {
-          debugPrint(res.body);
           emit(FurnitureState(
               status: FurnitureStatus.failure, furniture: event.furniture));
         }
         emit(FurnitureState(
             status: FurnitureStatus.loaded, furniture: event.furniture));
+      }
+    });
+    on<FurnitureRemoveFromMyCartEvent>((event, emit) async {
+      emit(FurnitureListState(
+          status: FurnitureStatus.myCartRemoveProcessing,
+          furnitures: event.furnitures));
+      final String? accessToken = await authRepo.getAccessToken();
+      if (accessToken != null) {
+        final Response res = await repo.removeFromCart(
+            accessToken: accessToken, furnitureId: event.furnitureId);
+        if (res.statusCode == 204) {
+          final List<Furniture> cleanedFurnitures = event.furnitures
+              .where((furniture) => furniture.id != event.furnitureId)
+              .toList();
+          emit(FurnitureListState(
+              status: FurnitureStatus.loaded, furnitures: cleanedFurnitures));
+        }
       }
     });
   }

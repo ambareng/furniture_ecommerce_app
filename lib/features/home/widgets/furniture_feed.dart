@@ -71,8 +71,6 @@ class FurnitureCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('$furniture');
-
     return GestureDetector(
       onTap: () {
         BlocProvider.of<FurnitureBloc>(context)

@@ -172,28 +172,29 @@ class FavoriteItemDeleteButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<FurnitureBloc, FurnitureState>(
       builder: (context, state) {
-        return GestureDetector(
-          onTap: () {
-            if (state is FurnitureListState) {
-              BlocProvider.of<FurnitureBloc>(context).add(
-                  FurnitureRemoveFromBookmarkEvent(
-                      furnitureId: furniture.id,
-                      furnitures: state.furnitures!));
-            }
-          },
-          child: Container(
+        return SizedBox(
             width: 24,
             height: 24,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              border: Border.all(color: bgBlack),
-            ),
-            child: const Icon(
-              Icons.close_rounded,
-              size: 17,
-            ),
-          ),
-        );
+            child: GestureDetector(
+              onTap: () {
+                if (state is FurnitureListState) {
+                  BlocProvider.of<FurnitureBloc>(context).add(
+                      FurnitureRemoveFromMyCartEvent(
+                          furnitureId: furniture.id,
+                          furnitures: state.furnitures!));
+                }
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  border: Border.all(color: bgBlack),
+                ),
+                child: const Icon(
+                  Icons.close_rounded,
+                  size: 17,
+                ),
+              ),
+            ));
       },
     );
   }
