@@ -102,6 +102,7 @@ class FavoriteItem extends StatelessWidget {
             furnitureImage: NetworkImage(furniture.imageURL),
           ),
           FavoriteItemDetails(
+            furniture: furniture,
             furnitureName: furniture.name,
             furniturePrice: furniture.price,
             furnitureQuantity: furniture.quantity,
@@ -204,12 +205,14 @@ class FavoriteItemDetails extends StatelessWidget {
   final String furnitureName;
   final double furniturePrice;
   final int furnitureQuantity;
+  final Furniture furniture;
 
   const FavoriteItemDetails(
       {Key? key,
       required this.furnitureName,
       required this.furniturePrice,
-      required this.furnitureQuantity})
+      required this.furnitureQuantity,
+      required this.furniture})
       : super(key: key);
 
   @override
@@ -234,7 +237,8 @@ class FavoriteItemDetails extends StatelessWidget {
                       fontWeight: FontWeight.w700, fontSize: 16, color: black)),
             ),
             const Spacer(),
-            QuantityController(quantity: furnitureQuantity)
+            QuantityController(
+                quantity: furnitureQuantity, furniture: furniture)
           ],
         ),
       ),
@@ -244,8 +248,10 @@ class FavoriteItemDetails extends StatelessWidget {
 
 class QuantityController extends StatelessWidget {
   final int quantity;
+  final Furniture furniture;
 
-  const QuantityController({Key? key, required this.quantity})
+  const QuantityController(
+      {Key? key, required this.quantity, required this.furniture})
       : super(key: key);
 
   @override
@@ -253,61 +259,69 @@ class QuantityController extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(bottom: 13),
       width: MediaQuery.of(context).size.width * 0.3,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          GestureDetector(
-            onTap: () {
-              // BlocProvider.of<FurnitureOrderQuantityBloc>(
-              //         context)
-              //     .add(FurnitureOrderQuantityAddEvent(
-              //         currentQuantity: state.quantity));
-            },
-            child: Container(
-              width: 30,
-              height: 30,
-              decoration: BoxDecoration(
-                  color: const Color(0xFFF3F3F3),
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                      width: 0.5, color: Colors.black.withOpacity(0.05))),
-              child: const Icon(
-                Icons.add,
-                color: black,
+      child: BlocBuilder<FurnitureBloc, FurnitureState>(
+        builder: (context, state) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  if (state is FurnitureListState) {
+                    BlocProvider.of<FurnitureBloc>(context).add(
+                        FurnitureAddQuantityEvent(
+                            furnitures: state.furnitures!,
+                            furnitureId: furniture.id));
+                  }
+                },
+                child: Container(
+                  width: 30,
+                  height: 30,
+                  decoration: BoxDecoration(
+                      color: const Color(0xFFF3F3F3),
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                          width: 0.5, color: Colors.black.withOpacity(0.05))),
+                  child: const Icon(
+                    Icons.add,
+                    color: black,
+                  ),
+                ),
               ),
-            ),
-          ),
-          Text(
-            // '${state.furniture!.quantity < 10 ? "0" : ""}${state.furniture!.quantity}',
-            '$quantity',
-            style: GoogleFonts.nunitoSans(
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18,
-                    letterSpacing: 1)),
-          ),
-          GestureDetector(
-            onTap: () {
-              // BlocProvider.of<FurnitureOrderQuantityBloc>(
-              //         context)
-              //     .add(FurnitureOrderQuantityRemoveEvent(
-              //         currentQuantity: state.quantity));
-            },
-            child: Container(
-              width: 30,
-              height: 30,
-              decoration: BoxDecoration(
-                  color: const Color(0xFFF3F3F3),
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                      width: 0.5, color: Colors.black.withOpacity(0.05))),
-              child: const Icon(
-                Icons.remove,
-                color: black,
+              Text(
+                // '${state.furniture!.quantity < 10 ? "0" : ""}${state.furniture!.quantity}',
+                '$quantity',
+                style: GoogleFonts.nunitoSans(
+                    textStyle: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                        letterSpacing: 1)),
               ),
-            ),
-          ),
-        ],
+              GestureDetector(
+                onTap: () {
+                  if (state is FurnitureListState) {
+                    BlocProvider.of<FurnitureBloc>(context).add(
+                        FurnitureRemoveQuantityEvent(
+                            furnitures: state.furnitures!,
+                            furnitureId: furniture.id));
+                  }
+                },
+                child: Container(
+                  width: 30,
+                  height: 30,
+                  decoration: BoxDecoration(
+                      color: const Color(0xFFF3F3F3),
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                          width: 0.5, color: Colors.black.withOpacity(0.05))),
+                  child: const Icon(
+                    Icons.remove,
+                    color: black,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

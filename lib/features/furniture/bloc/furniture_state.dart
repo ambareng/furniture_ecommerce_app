@@ -6,7 +6,8 @@ enum FurnitureStatus {
   bookmarkLoading,
   loading,
   addedToCart,
-  myCartRemoveProcessing
+  myCartRemoveProcessing,
+  quantityLoading
 }
 
 class FurnitureState extends Equatable {

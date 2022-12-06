@@ -138,4 +138,38 @@ class FurnitureRepo {
         });
     return res;
   }
+
+  Future<Furniture?> addQuantity(
+      {required String accessToken, required int furnitureId}) async {
+    final res = await post(
+        Uri.parse(
+            '${dotenv.env["BACKEND_BASE_URL"]}v1/api/my_cart/$furnitureId/add_quantity/'),
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+          'Content-Type': 'application/json'
+        });
+    if (res.statusCode == 200) {
+      final resJson = jsonDecode(res.body);
+      return Furniture.fromJson(resJson);
+    } else {
+      return null;
+    }
+  }
+
+  Future<Furniture?> removeQuantity(
+      {required String accessToken, required int furnitureId}) async {
+    final res = await post(
+        Uri.parse(
+            '${dotenv.env["BACKEND_BASE_URL"]}v1/api/my_cart/$furnitureId/remove_quantity/'),
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+          'Content-Type': 'application/json'
+        });
+    if (res.statusCode == 200) {
+      final resJson = jsonDecode(res.body);
+      return Furniture.fromJson(resJson);
+    } else {
+      return null;
+    }
+  }
 }

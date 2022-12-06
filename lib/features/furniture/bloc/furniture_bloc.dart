@@ -113,5 +113,53 @@ class FurnitureBloc extends Bloc<FurnitureEvent, FurnitureState> {
         }
       }
     });
+    on<FurnitureAddQuantityEvent>((event, emit) async {
+      emit(FurnitureListState(
+          status: FurnitureStatus.quantityLoading,
+          furnitures: event.furnitures));
+      final String? accessToken = await authRepo.getAccessToken();
+      if (accessToken != null) {
+        final Furniture? updatedFurniture = await repo.addQuantity(
+            accessToken: accessToken, furnitureId: event.furnitureId);
+        if (updatedFurniture != null) {
+          final List<Furniture> updatedFurnitures =
+              event.furnitures.map((furniture) {
+            if (furniture.id == event.furnitureId) {
+              return furniture.copyWith(quantity: updatedFurniture.quantity);
+            }
+            return furniture;
+          }).toList();
+          emit(FurnitureListState(
+              status: FurnitureStatus.loaded, furnitures: updatedFurnitures));
+        } else {
+          emit(FurnitureListState(
+              status: FurnitureStatus.loaded, furnitures: event.furnitures));
+        }
+      }
+    });
+    on<FurnitureRemoveQuantityEvent>((event, emit) async {
+      emit(FurnitureListState(
+          status: FurnitureStatus.quantityLoading,
+          furnitures: event.furnitures));
+      final String? accessToken = await authRepo.getAccessToken();
+      if (accessToken != null) {
+        final Furniture? updatedFurniture = await repo.removeQuantity(
+            accessToken: accessToken, furnitureId: event.furnitureId);
+        if (updatedFurniture != null) {
+          final List<Furniture> updatedFurnitures =
+              event.furnitures.map((furniture) {
+            if (furniture.id == event.furnitureId) {
+              return furniture.copyWith(quantity: updatedFurniture.quantity);
+            }
+            return furniture;
+          }).toList();
+          emit(FurnitureListState(
+              status: FurnitureStatus.loaded, furnitures: updatedFurnitures));
+        } else {
+          emit(FurnitureListState(
+              status: FurnitureStatus.loaded, furnitures: event.furnitures));
+        }
+      }
+    });
   }
 }
