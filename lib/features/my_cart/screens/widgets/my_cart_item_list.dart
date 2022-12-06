@@ -33,50 +33,55 @@ class MyCartItemList extends HookWidget {
             );
           }
           if (state is FurnitureListState) {
-            return ListView.builder(
-                padding: const EdgeInsets.only(top: 25, bottom: 25),
-                itemCount:
-                    state.furnitures != null ? state.furnitures!.length + 1 : 0,
-                itemBuilder: (context, index) {
-                  if (index == state.furnitures!.length) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const PromoCodeInput(),
-                        const FloatingTotal(),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.9,
-                          height: 60,
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(black),
-                                shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10)))),
-                            child: Text(
-                              'Check out',
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.nunitoSans(
-                                  textStyle: const TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 20)),
+            if (state.furnitures!.isNotEmpty) {
+              return ListView.builder(
+                  padding: const EdgeInsets.only(top: 25, bottom: 25),
+                  itemCount: state.furnitures != null
+                      ? state.furnitures!.length + 1
+                      : 0,
+                  itemBuilder: (context, index) {
+                    if (index == state.furnitures!.length) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const PromoCodeInput(),
+                          const FloatingTotal(),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            height: 60,
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(black),
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)))),
+                              child: Text(
+                                'Check out',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.nunitoSans(
+                                    textStyle: const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 20)),
+                              ),
                             ),
-                          ),
-                        )
-                      ],
-                    );
-                  }
-                  if (state.furnitures != null) {
-                    return FavoriteItem(furniture: state.furnitures![index]);
-                  }
-                  return Container();
-                });
+                          )
+                        ],
+                      );
+                    }
+                    if (state.furnitures != null) {
+                      return FavoriteItem(furniture: state.furnitures![index]);
+                    }
+                    return Container();
+                  });
+            }
           }
-          return Container();
+          return const Center(
+            child: Text('Sorry no items in your cart!'),
+          );
         },
       ),
     );
