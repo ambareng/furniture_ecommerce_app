@@ -50,7 +50,9 @@ class MyCartItemList extends HookWidget {
                             width: MediaQuery.of(context).size.width * 0.9,
                             height: 60,
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/check_out');
+                              },
                               style: ButtonStyle(
                                   backgroundColor:
                                       MaterialStateProperty.all<Color>(black),

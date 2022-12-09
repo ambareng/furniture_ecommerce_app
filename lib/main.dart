@@ -9,6 +9,7 @@ import 'package:furniture_ecommerce_app/core/loading/screens/loading_screen.dart
 import 'package:furniture_ecommerce_app/features/auth/screens/login_screen.dart';
 import 'package:furniture_ecommerce_app/features/auth/screens/signup_screen.dart';
 import 'package:furniture_ecommerce_app/features/bottom_navbar/bloc/bottom_navbar_bloc.dart';
+import 'package:furniture_ecommerce_app/features/check_out/screens/check_out_screen.dart';
 import 'package:furniture_ecommerce_app/features/favorites/screens/favorites_screen.dart';
 import 'package:furniture_ecommerce_app/features/furniture/bloc/furniture_bloc.dart';
 import 'package:furniture_ecommerce_app/features/furniture/bloc/furniture_order_quantity_bloc.dart';
@@ -90,6 +91,7 @@ class MyApp extends StatelessWidget {
               '/favorites': (context) => const FavoritesScreen(),
               '/loading': (context) => const LoadingScreen(),
               '/my_cart': (context) => const MyCartScreen(),
+              '/check_out': (context) => const CheckOutScreen(),
             }),
       ),
     );
