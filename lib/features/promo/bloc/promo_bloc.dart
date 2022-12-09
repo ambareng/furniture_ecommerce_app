@@ -36,12 +36,15 @@ class PromoBloc extends Bloc<PromoEvent, PromoState> {
         if (await promoRepo.removeCurrentPromo(
             accessToken: accessToken, promoName: event.promoName)) {
           emit(const PromoState(status: PromoStateStatus.loaded));
+          return;
         }
       }
       if (event.context != null) {
         BlocProvider.of<MyCartTotalBloc>(event.context!)
             .add(GetMyCartTotalEvent());
       }
+      emit(const PromoState(
+          status: PromoStateStatus.loaded, error: 'Something went wrong!'));
     });
     on<PromoApplyEvent>((event, emit) async {
       emit(const PromoState(status: PromoStateStatus.loading));
@@ -52,12 +55,15 @@ class PromoBloc extends Bloc<PromoEvent, PromoState> {
         if (currentPromo != null) {
           emit(
               PromoState(status: PromoStateStatus.loaded, promo: currentPromo));
+          return;
         }
       }
       if (event.context != null) {
         BlocProvider.of<MyCartTotalBloc>(event.context!)
             .add(GetMyCartTotalEvent());
       }
+      emit(const PromoState(
+          status: PromoStateStatus.loaded, error: 'Invalid promo code!'));
     });
   }
 }
