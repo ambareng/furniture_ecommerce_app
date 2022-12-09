@@ -19,6 +19,8 @@ import 'package:furniture_ecommerce_app/features/my_cart/bloc/my_cart_total_bloc
 import 'package:furniture_ecommerce_app/features/my_cart/repositories/my_cart_total_repo.dart';
 import 'package:furniture_ecommerce_app/features/my_cart/screens/my_cart_screen.dart';
 import 'package:furniture_ecommerce_app/features/onboarding/screens/onboarding_screen.dart';
+import 'package:furniture_ecommerce_app/features/promo/bloc/promo_bloc.dart';
+import 'package:furniture_ecommerce_app/features/promo/repositories/promo_repo.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
@@ -45,6 +47,9 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) => MyCartTotalRepo(),
         ),
+        RepositoryProvider(
+          create: (context) => PromoRepo(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -64,6 +69,10 @@ class MyApp extends StatelessWidget {
                   authRepo: RepositoryProvider.of<AuthRepo>(context),
                   myCartTotalRepo:
                       RepositoryProvider.of<MyCartTotalRepo>(context)))),
+          BlocProvider(
+              create: ((context) => PromoBloc(
+                  authRepo: RepositoryProvider.of<AuthRepo>(context),
+                  promoRepo: RepositoryProvider.of<PromoRepo>(context)))),
         ],
         child: MaterialApp(
             theme: ThemeData(
