@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furniture_ecommerce_app/core/custom_icon_buttons/back_icon.dart';
+import 'package:furniture_ecommerce_app/features/check_out/widgets/check_out_card.dart';
 import 'package:furniture_ecommerce_app/features/home/widgets/top_bar.dart';
 import 'package:gap/gap.dart';
 
@@ -21,6 +22,11 @@ class CheckOutScreen extends StatelessWidget {
                 bottomHeader: 'Check out',
                 leftIcon: BackIconButton(),
               ),
+              Gap(25),
+              CheckOutCard(
+                title: 'Shipping Address',
+                type: CheckOutCardType.address,
+              )
             ],
           ),
         ),
