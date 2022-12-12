@@ -26,6 +26,11 @@ class CheckOutScreen extends StatelessWidget {
               CheckOutCard(
                 title: 'Shipping Address',
                 type: CheckOutCardType.address,
+              ),
+              Gap(35),
+              CheckOutCard(
+                title: 'Payment',
+                type: CheckOutCardType.payment,
               )
             ],
           ),
