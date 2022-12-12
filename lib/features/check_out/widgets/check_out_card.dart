@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:furniture_ecommerce_app/core/styles.dart';
 import 'package:furniture_ecommerce_app/features/check_out/widgets/check_out_address_card.dart';
+import 'package:furniture_ecommerce_app/features/check_out/widgets/check_out_delivery_method_card.dart';
 import 'package:furniture_ecommerce_app/features/check_out/widgets/check_out_payment_card.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-enum CheckOutCardType { address, payment }
+enum CheckOutCardType { address, payment, deliveryMethod }
 
 class CheckOutCard extends StatelessWidget {
   final String title;
@@ -32,13 +33,15 @@ class CheckOutCard extends StatelessWidget {
             ),
             const Icon(
               Icons.edit_rounded,
-              color: black,
+              color: lightGray,
             )
           ],
         ),
         const Gap(10),
         if (type == CheckOutCardType.address) const CheckOutAddressCard(),
-        if (type == CheckOutCardType.payment) const CheckOutPaymentCard()
+        if (type == CheckOutCardType.payment) const CheckOutPaymentCard(),
+        if (type == CheckOutCardType.deliveryMethod)
+          const CheckOutDeliveryMethodCard()
       ],
     );
   }
