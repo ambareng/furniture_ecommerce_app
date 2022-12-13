@@ -32,7 +32,7 @@ class CheckOutDeliveryMethodCard extends StatelessWidget {
             'Fast (2-3 days)',
             style: GoogleFonts.nunitoSans(
                 textStyle: const TextStyle(
-                    fontWeight: FontWeight.w700, fontSize: 14, color: black)),
+                    fontWeight: FontWeight.w700, fontSize: 14, color: bgBlack)),
           )
         ],
       ),
