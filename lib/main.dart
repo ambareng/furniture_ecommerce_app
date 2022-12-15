@@ -6,6 +6,8 @@ import 'package:furniture_ecommerce_app/core/auth/bloc/auth_bloc.dart';
 import 'package:furniture_ecommerce_app/core/auth/repositories/auth_repo.dart';
 import 'package:furniture_ecommerce_app/core/auth/screens/auth_loading_screen.dart';
 import 'package:furniture_ecommerce_app/core/loading/screens/loading_screen.dart';
+import 'package:furniture_ecommerce_app/features/address/bloc/address_bloc.dart';
+import 'package:furniture_ecommerce_app/features/address/repositories/address_repo.dart';
 import 'package:furniture_ecommerce_app/features/auth/screens/login_screen.dart';
 import 'package:furniture_ecommerce_app/features/auth/screens/signup_screen.dart';
 import 'package:furniture_ecommerce_app/features/bottom_navbar/bloc/bottom_navbar_bloc.dart';
@@ -51,6 +53,9 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) => PromoRepo(),
         ),
+        RepositoryProvider(
+          create: (context) => AddressRepo(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -74,6 +79,10 @@ class MyApp extends StatelessWidget {
               create: ((context) => PromoBloc(
                   authRepo: RepositoryProvider.of<AuthRepo>(context),
                   promoRepo: RepositoryProvider.of<PromoRepo>(context)))),
+          BlocProvider(
+              create: ((context) => AddressBloc(
+                  authRepo: RepositoryProvider.of<AuthRepo>(context),
+                  addressRepo: RepositoryProvider.of<AddressRepo>(context)))),
         ],
         child: MaterialApp(
             theme: ThemeData(
