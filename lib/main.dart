@@ -8,6 +8,8 @@ import 'package:furniture_ecommerce_app/core/auth/screens/auth_loading_screen.da
 import 'package:furniture_ecommerce_app/core/loading/screens/loading_screen.dart';
 import 'package:furniture_ecommerce_app/features/address/bloc/address_bloc.dart';
 import 'package:furniture_ecommerce_app/features/address/repositories/address_repo.dart';
+import 'package:furniture_ecommerce_app/features/address/screens/address_add_screen.dart';
+import 'package:furniture_ecommerce_app/features/address/screens/addresses_screen.dart';
 import 'package:furniture_ecommerce_app/features/auth/screens/login_screen.dart';
 import 'package:furniture_ecommerce_app/features/auth/screens/signup_screen.dart';
 import 'package:furniture_ecommerce_app/features/bottom_navbar/bloc/bottom_navbar_bloc.dart';
@@ -101,6 +103,8 @@ class MyApp extends StatelessWidget {
               '/loading': (context) => const LoadingScreen(),
               '/my_cart': (context) => const MyCartScreen(),
               '/check_out': (context) => const CheckOutScreen(),
+              '/addresses': (context) => const AddressesScreen(),
+              '/address/add': (context) => const AddressAddScreen(),
             }),
       ),
     );

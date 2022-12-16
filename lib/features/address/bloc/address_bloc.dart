@@ -13,22 +13,18 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
   final AddressRepo addressRepo;
 
   AddressBloc({required this.authRepo, required this.addressRepo})
-      : super(const AddressState(status: AddressStatus.loading)) {
+      : super(
+            const AddressState(status: AddressStatus.loading, addresses: [])) {
     on<GetAllAddressEvent>((event, emit) async {
-      emit(const AddressState(status: AddressStatus.loading));
+      emit(const AddressState(status: AddressStatus.loading, addresses: []));
       final String? accessToken = await authRepo.getAccessToken();
       if (accessToken != null) {
         final List<Address>? addresses =
             await addressRepo.getAllAddresses(accessToken: accessToken);
         if (addresses != null && addresses.isNotEmpty) {
-          debugPrint(
-              '===========================================================');
-          debugPrint('$addresses');
-          debugPrint(
-              '===========================================================');
           return;
         } else {
-          emit(const AddressState(status: AddressStatus.loaded));
+          emit(const AddressState(status: AddressStatus.loaded, addresses: []));
         }
       }
     });

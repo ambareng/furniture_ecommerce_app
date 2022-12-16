@@ -29,16 +29,19 @@ class CheckOutScreen extends StatelessWidget {
               const CheckOutCard(
                 title: 'Shipping Address',
                 type: CheckOutCardType.address,
+                url: '/addresses',
               ),
               const Gap(25),
               const CheckOutCard(
                 title: 'Payment',
                 type: CheckOutCardType.payment,
+                url: '/addresses',
               ),
               const Gap(25),
               const CheckOutCard(
                 title: 'Delivery method',
                 type: CheckOutCardType.deliveryMethod,
+                url: '/addresses',
               ),
               const Gap(25),
               const CheckOutBreakdownCard(),

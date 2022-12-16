@@ -11,8 +11,10 @@ enum CheckOutCardType { address, payment, deliveryMethod }
 class CheckOutCard extends StatelessWidget {
   final String title;
   final CheckOutCardType type;
+  final String url;
 
-  const CheckOutCard({Key? key, required this.title, required this.type})
+  const CheckOutCard(
+      {Key? key, required this.title, required this.type, required this.url})
       : super(key: key);
 
   @override
@@ -31,9 +33,14 @@ class CheckOutCard extends StatelessWidget {
                       fontSize: 18,
                       color: lighterGray)),
             ),
-            const Icon(
-              Icons.edit_rounded,
-              color: lightGray,
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, url);
+              },
+              child: const Icon(
+                Icons.edit_rounded,
+                color: lightGray,
+              ),
             )
           ],
         ),
