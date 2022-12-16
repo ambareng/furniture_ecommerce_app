@@ -24,11 +24,36 @@ class LoginForm extends HookWidget {
     }
 
     return BlocListener<AuthBloc, AuthState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is AuthAuthenticatedState) {
-          Fluttertoast.showToast(msg: 'Logged in Successfully!');
+          Fluttertoast.showToast(
+              msg: 'Logged in Successfully!', gravity: ToastGravity.TOP);
+          Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
         } else if (state is AuthErrorState) {
-          Fluttertoast.showToast(msg: 'Something went wrong!');
+          if (state.errorList.containsKey('email')) {
+            Fluttertoast.showToast(
+                msg: 'Email: ${state.errorList["email"][0]}',
+                gravity: ToastGravity.TOP,
+                backgroundColor: Colors.red[400],
+                toastLength: Toast.LENGTH_LONG,
+                timeInSecForIosWeb: 5);
+          }
+          if (state.errorList.containsKey('password')) {
+            Fluttertoast.showToast(
+                toastLength: Toast.LENGTH_LONG,
+                msg: 'Password: ${state.errorList["password"][0]}',
+                gravity: ToastGravity.TOP,
+                backgroundColor: Colors.red[400],
+                timeInSecForIosWeb: 5);
+          }
+          if (state.errorList.containsKey('detail')) {
+            Fluttertoast.showToast(
+                toastLength: Toast.LENGTH_LONG,
+                msg: state.errorList['detail'],
+                gravity: ToastGravity.TOP,
+                backgroundColor: Colors.red[400],
+                timeInSecForIosWeb: 5);
+          }
         }
       },
       child: BlocBuilder<AuthBloc, AuthState>(

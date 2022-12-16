@@ -10,7 +10,7 @@ class AuthLoadingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is AuthUnauthenticatedState) {
             Navigator.pushNamedAndRemoveUntil(
                 context, '/onboarding', (route) => false);
@@ -18,7 +18,8 @@ class AuthLoadingScreen extends StatelessWidget {
             Navigator.pushNamedAndRemoveUntil(
                 context, '/home', (route) => false);
           } else if (state is AuthErrorState) {
-            Fluttertoast.showToast(msg: 'Something went wrong!');
+            Fluttertoast.showToast(
+                msg: 'Something went wrong!', gravity: ToastGravity.TOP);
           }
         },
         child: BlocBuilder<AuthBloc, AuthState>(

@@ -9,7 +9,16 @@ abstract class AuthState extends Equatable {
 
 class AuthLoadingState extends AuthState {}
 
-class AuthAuthenticatedState extends AuthState {}
+class AuthAuthenticatedState extends AuthState {
+  final String accessToken;
+  final String refreshToken;
+
+  const AuthAuthenticatedState(
+      {required this.accessToken, required this.refreshToken});
+
+  @override
+  List<Object> get props => [accessToken, refreshToken];
+}
 
 class AuthUnauthenticatedState extends AuthState {}
 

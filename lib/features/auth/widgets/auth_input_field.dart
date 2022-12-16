@@ -7,12 +7,14 @@ class AuthInputField extends HookWidget {
   final String fieldLabel;
   final bool isObscured;
   final TextEditingController controller;
+  final String? error;
 
   const AuthInputField(
       {Key? key,
       this.isObscured = false,
       required this.fieldLabel,
-      required this.controller})
+      required this.controller,
+      this.error})
       : super(key: key);
 
   @override
@@ -57,7 +59,7 @@ class AuthInputField extends HookWidget {
               borderSide: BorderSide(color: lightestGray),
             ),
           ),
-        )
+        ),
       ],
     );
   }
