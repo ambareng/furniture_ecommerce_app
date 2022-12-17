@@ -7,14 +7,14 @@ class AddressState extends Equatable {
   final List<Address>? addresses;
   final Address? selectedAddress;
   final Map<String, dynamic>? errors;
-  final int? toEditAddressId;
+  final Address? toEditAddress;
 
   const AddressState(
       {required this.status,
       this.addresses,
       this.selectedAddress,
       this.errors,
-      this.toEditAddressId});
+      this.toEditAddress});
 
   @override
   List<Object?> get props => [status, addresses, selectedAddress, errors];
@@ -24,14 +24,14 @@ class AddressState extends Equatable {
     final List<Address>? addresses,
     final Address? selectedAddress,
     final Map<String, dynamic>? errors,
-    final int? toEditAddressId,
+    final Address? toEditAddress,
   }) {
     return AddressState(
       status: status ?? this.status,
       addresses: addresses ?? this.addresses,
       selectedAddress: selectedAddress ?? this.selectedAddress,
       errors: errors ?? this.errors,
-      toEditAddressId: toEditAddressId ?? this.toEditAddressId,
+      toEditAddress: toEditAddress ?? this.toEditAddress,
     );
   }
 }

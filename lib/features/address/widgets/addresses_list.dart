@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_ecommerce_app/core/styles.dart';
 import 'package:furniture_ecommerce_app/features/address/bloc/address_bloc.dart';
 import 'package:furniture_ecommerce_app/features/address/models/address.dart';
-import 'package:furniture_ecommerce_app/features/check_out/widgets/check_out_address_card.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AddressesList extends StatelessWidget {
@@ -141,13 +140,21 @@ class AddressItemCard extends StatelessWidget {
                           fontSize: 18,
                           color: black)),
                 ),
-                GestureDetector(
-                  onTap: () {},
-                  child: const Icon(
-                    Icons.edit_rounded,
-                    size: 20,
-                    color: bgBlack,
-                  ),
+                BlocBuilder<AddressBloc, AddressState>(
+                  builder: (context, state) {
+                    return GestureDetector(
+                      onTap: () {
+                        BlocProvider.of<AddressBloc>(context)
+                            .add(GetAddressEvent(toEditAddressId: address.id));
+                        Navigator.pushNamed(context, '/address/edit');
+                      },
+                      child: const Icon(
+                        Icons.edit_rounded,
+                        size: 20,
+                        color: bgBlack,
+                      ),
+                    );
+                  },
                 )
               ],
             ),

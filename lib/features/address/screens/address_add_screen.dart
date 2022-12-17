@@ -11,7 +11,9 @@ import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AddressAddScreen extends HookWidget {
-  const AddressAddScreen({Key? key}) : super(key: key);
+  final bool isEdit;
+
+  const AddressAddScreen({Key? key, this.isEdit = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,7 @@ class AddressAddScreen extends HookWidget {
           } else if (state.status == AddressStatus.addSuccess) {
             Fluttertoast.showToast(
                 backgroundColor: bgBlack,
-                msg: 'Address added succesfully!',
+                msg: 'Address ${isEdit ? "edited" : "added"} succesfully!',
                 gravity: ToastGravity.TOP);
             Navigator.pushNamed(context, '/addresses');
           }
@@ -58,19 +60,19 @@ class AddressAddScreen extends HookWidget {
             child: Column(
               children: [
                 const Gap(60),
-                const TopBar(
-                  bottomHeader: 'Add shipping address',
-                  leftIcon: BackIconButton(),
+                TopBar(
+                  bottomHeader: '${isEdit ? "Edit" : "Add"} shipping address',
+                  leftIcon: const BackIconButton(),
                 ),
                 const Gap(25),
                 AddressAddFields(
-                  addressController: addressController,
-                  addressLabelController: addressLabelController,
-                  postalCodeController: postalCodeController,
-                  countryController: countryController,
-                  cityController: cityController,
-                  regionController: regionController,
-                ),
+                    addressController: addressController,
+                    addressLabelController: addressLabelController,
+                    postalCodeController: postalCodeController,
+                    countryController: countryController,
+                    cityController: cityController,
+                    regionController: regionController,
+                    isEdit: isEdit),
               ],
             ),
           ),
@@ -100,36 +102,54 @@ class AddAddressFloatingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 60,
-      width: MediaQuery.of(context).size.width * 0.9,
-      child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: bgBlack,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-          ),
-          onPressed: () {
-            final Map<String, dynamic> addAddressPayload = {
-              'label': addressLabelController.text,
-              'full_address': addressController.text,
-              'postal_code': postalCodeController.text,
-              'country': countryController.text,
-              'city': cityController.text,
-              'region': regionController.text
-            };
-            BlocProvider.of<AddressBloc>(context)
-                .add(AddAddressEvent(addAddressPayload: addAddressPayload));
-          },
-          child: Text(
-            'SAVE ADDRESS',
-            style: GoogleFonts.nunitoSans(
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20,
-                    color: Colors.white)),
-          )),
+    return BlocBuilder<AddressBloc, AddressState>(
+      builder: (context, state) {
+        return SizedBox(
+          height: 60,
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: bgBlack,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              onPressed: () {
+                if (state.toEditAddress != null) {
+                  final Map<String, dynamic> editAddressPayload = {
+                    'label': addressLabelController.text,
+                    'full_address': addressController.text,
+                    'postal_code': postalCodeController.text,
+                    'country': countryController.text,
+                    'city': cityController.text,
+                    'region': regionController.text
+                  };
+                  BlocProvider.of<AddressBloc>(context).add(EditAddressEvent(
+                      editAddressPayload: editAddressPayload,
+                      addressId: state.toEditAddress!.id));
+                  return;
+                }
+                final Map<String, dynamic> addAddressPayload = {
+                  'label': addressLabelController.text,
+                  'full_address': addressController.text,
+                  'postal_code': postalCodeController.text,
+                  'country': countryController.text,
+                  'city': cityController.text,
+                  'region': regionController.text
+                };
+                BlocProvider.of<AddressBloc>(context)
+                    .add(AddAddressEvent(addAddressPayload: addAddressPayload));
+              },
+              child: Text(
+                'SAVE ADDRESS',
+                style: GoogleFonts.nunitoSans(
+                    textStyle: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20,
+                        color: Colors.white)),
+              )),
+        );
+      },
     );
   }
 }

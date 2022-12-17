@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:furniture_ecommerce_app/core/auth/repositories/auth_repo.dart';
 import 'package:furniture_ecommerce_app/features/address/models/address.dart';
 import 'package:furniture_ecommerce_app/features/address/repositories/address_repo.dart';
@@ -90,6 +89,52 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
                 status: AddressStatus.addError,
                 errors: {'non_field_errors': 'Something went wrong!'}));
           }
+        }
+      }
+    });
+    on<GetAddressEvent>((event, emit) async {
+      emit(state.copyWith(status: AddressStatus.loading, toEditAddress: null));
+      final String? accessToken = await authRepo.getAccessToken();
+      if (accessToken != null) {
+        final Address? toEditAddress = await addressRepo.getAddressById(
+            accessToken: accessToken, addressId: event.toEditAddressId);
+        if (toEditAddress != null) {
+          emit(state.copyWith(
+              status: AddressStatus.loaded, toEditAddress: toEditAddress));
+          return;
+        }
+      }
+      emit(const AddressState(
+          status: AddressStatus.addError,
+          errors: {'non_field_errors': 'Something went wrong!'}));
+    });
+    on<EditAddressEvent>((event, emit) async {
+      emit(state.copyWith(status: AddressStatus.adding));
+      final String? accessToken = await authRepo.getAccessToken();
+      if (accessToken != null) {
+        final Address? editedAddress = await addressRepo.editAddress(
+            accessToken: accessToken,
+            editAddressPayload: event.editAddressPayload,
+            addressId: event.addressId);
+        if (editedAddress != null) {
+          final List<Address>? oldAddresses = state.addresses;
+          if (oldAddresses != null) {
+            for (Address address in oldAddresses) {
+              if (address.id == editedAddress.id) {
+                address = address.copyWith(
+                    label: editedAddress.label,
+                    full_address: editedAddress.full_address,
+                    country: editedAddress.country,
+                    city: editedAddress.city,
+                    region: editedAddress.region,
+                    postal_code: editedAddress.postal_code);
+              }
+            }
+          }
+          emit(state.copyWith(
+              status: AddressStatus.addSuccess,
+              toEditAddress: null,
+              addresses: oldAddresses));
         }
       }
     });

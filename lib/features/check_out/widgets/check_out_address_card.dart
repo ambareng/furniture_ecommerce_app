@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_ecommerce_app/core/styles.dart';
 import 'package:furniture_ecommerce_app/features/address/bloc/address_bloc.dart';
-import 'package:furniture_ecommerce_app/features/address/models/address.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CheckOutAddressCard extends StatelessWidget {
@@ -32,7 +31,7 @@ class CheckOutAddressCard extends StatelessWidget {
                 : state.status == AddressStatus.loaded &&
                         state.selectedAddress == null
                     ? const NoAddress()
-                    : SelectedAddressDetails());
+                    : const SelectedAddressDetails());
       },
     );
   }

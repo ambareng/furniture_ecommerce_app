@@ -43,4 +43,34 @@ class AddressRepo {
     );
     return res;
   }
+
+  Future<Address?> getAddressById(
+      {required String accessToken, required int addressId}) async {
+    final Response res = await get(
+      Uri.parse(
+          '${dotenv.env['BACKEND_BASE_URL']!}v1/api/addresses/$addressId/'),
+      headers: {'Authorization': 'Bearer $accessToken'},
+    );
+    if (res.statusCode == 200) {
+      final resJson = jsonDecode(res.body);
+      return Address.fromJson(resJson);
+    }
+    return null;
+  }
+
+  Future<Address?> editAddress(
+      {required String accessToken,
+      required Map<String, dynamic> editAddressPayload,
+      required int addressId}) async {
+    final res = await patch(
+        Uri.parse(
+            '${dotenv.env['BACKEND_BASE_URL']!}v1/api/addresses/$addressId/'),
+        headers: {'Authorization': 'Bearer $accessToken'},
+        body: editAddressPayload);
+    if (res.statusCode == 200) {
+      final resJson = jsonDecode(res.body);
+      return Address.fromJson(resJson);
+    }
+    return null;
+  }
 }
