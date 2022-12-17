@@ -8,12 +8,12 @@ class Address with _$Address {
   factory Address({
     required int id,
     required String label,
-    required String fullAddress,
-    required String postalCode,
+    required String full_address,
+    required String postal_code,
     required String country,
     required String city,
     required String region,
-    required bool isDefault,
+    required bool is_default,
   }) = _Address;
 
   factory Address.fromJson(Map<String, Object?> json) =>

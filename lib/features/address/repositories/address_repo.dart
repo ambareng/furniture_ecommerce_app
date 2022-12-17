@@ -23,4 +23,24 @@ class AddressRepo {
     }
     return null;
   }
+
+  Future<Response> addAddress(
+      {required String accessToken,
+      required Map<String, dynamic> addAddressPayload}) async {
+    final res = await post(
+        Uri.parse('${dotenv.env['BACKEND_BASE_URL']!}v1/api/addresses/'),
+        headers: {'Authorization': 'Bearer $accessToken'},
+        body: addAddressPayload);
+    return res;
+  }
+
+  Future<Response> toggleAddressDefault(
+      {required String accessToken, required int addressId}) async {
+    final Response res = await post(
+      Uri.parse(
+          '${dotenv.env['BACKEND_BASE_URL']!}v1/api/addresses/$addressId/toggle_default/'),
+      headers: {'Authorization': 'Bearer $accessToken'},
+    );
+    return res;
+  }
 }

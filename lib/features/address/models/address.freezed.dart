@@ -22,12 +22,12 @@ Address _$AddressFromJson(Map<String, dynamic> json) {
 mixin _$Address {
   int get id => throw _privateConstructorUsedError;
   String get label => throw _privateConstructorUsedError;
-  String get fullAddress => throw _privateConstructorUsedError;
-  String get postalCode => throw _privateConstructorUsedError;
+  String get full_address => throw _privateConstructorUsedError;
+  String get postal_code => throw _privateConstructorUsedError;
   String get country => throw _privateConstructorUsedError;
   String get city => throw _privateConstructorUsedError;
   String get region => throw _privateConstructorUsedError;
-  bool get isDefault => throw _privateConstructorUsedError;
+  bool get is_default => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,12 +42,12 @@ abstract class $AddressCopyWith<$Res> {
   $Res call(
       {int id,
       String label,
-      String fullAddress,
-      String postalCode,
+      String full_address,
+      String postal_code,
       String country,
       String city,
       String region,
-      bool isDefault});
+      bool is_default});
 }
 
 /// @nodoc
@@ -65,12 +65,12 @@ class _$AddressCopyWithImpl<$Res, $Val extends Address>
   $Res call({
     Object? id = null,
     Object? label = null,
-    Object? fullAddress = null,
-    Object? postalCode = null,
+    Object? full_address = null,
+    Object? postal_code = null,
     Object? country = null,
     Object? city = null,
     Object? region = null,
-    Object? isDefault = null,
+    Object? is_default = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -81,13 +81,13 @@ class _$AddressCopyWithImpl<$Res, $Val extends Address>
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      fullAddress: null == fullAddress
-          ? _value.fullAddress
-          : fullAddress // ignore: cast_nullable_to_non_nullable
+      full_address: null == full_address
+          ? _value.full_address
+          : full_address // ignore: cast_nullable_to_non_nullable
               as String,
-      postalCode: null == postalCode
-          ? _value.postalCode
-          : postalCode // ignore: cast_nullable_to_non_nullable
+      postal_code: null == postal_code
+          ? _value.postal_code
+          : postal_code // ignore: cast_nullable_to_non_nullable
               as String,
       country: null == country
           ? _value.country
@@ -101,9 +101,9 @@ class _$AddressCopyWithImpl<$Res, $Val extends Address>
           ? _value.region
           : region // ignore: cast_nullable_to_non_nullable
               as String,
-      isDefault: null == isDefault
-          ? _value.isDefault
-          : isDefault // ignore: cast_nullable_to_non_nullable
+      is_default: null == is_default
+          ? _value.is_default
+          : is_default // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -119,12 +119,12 @@ abstract class _$$_AddressCopyWith<$Res> implements $AddressCopyWith<$Res> {
   $Res call(
       {int id,
       String label,
-      String fullAddress,
-      String postalCode,
+      String full_address,
+      String postal_code,
       String country,
       String city,
       String region,
-      bool isDefault});
+      bool is_default});
 }
 
 /// @nodoc
@@ -139,12 +139,12 @@ class __$$_AddressCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? label = null,
-    Object? fullAddress = null,
-    Object? postalCode = null,
+    Object? full_address = null,
+    Object? postal_code = null,
     Object? country = null,
     Object? city = null,
     Object? region = null,
-    Object? isDefault = null,
+    Object? is_default = null,
   }) {
     return _then(_$_Address(
       id: null == id
@@ -155,13 +155,13 @@ class __$$_AddressCopyWithImpl<$Res>
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      fullAddress: null == fullAddress
-          ? _value.fullAddress
-          : fullAddress // ignore: cast_nullable_to_non_nullable
+      full_address: null == full_address
+          ? _value.full_address
+          : full_address // ignore: cast_nullable_to_non_nullable
               as String,
-      postalCode: null == postalCode
-          ? _value.postalCode
-          : postalCode // ignore: cast_nullable_to_non_nullable
+      postal_code: null == postal_code
+          ? _value.postal_code
+          : postal_code // ignore: cast_nullable_to_non_nullable
               as String,
       country: null == country
           ? _value.country
@@ -175,9 +175,9 @@ class __$$_AddressCopyWithImpl<$Res>
           ? _value.region
           : region // ignore: cast_nullable_to_non_nullable
               as String,
-      isDefault: null == isDefault
-          ? _value.isDefault
-          : isDefault // ignore: cast_nullable_to_non_nullable
+      is_default: null == is_default
+          ? _value.is_default
+          : is_default // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -189,12 +189,12 @@ class _$_Address implements _Address {
   _$_Address(
       {required this.id,
       required this.label,
-      required this.fullAddress,
-      required this.postalCode,
+      required this.full_address,
+      required this.postal_code,
       required this.country,
       required this.city,
       required this.region,
-      required this.isDefault});
+      required this.is_default});
 
   factory _$_Address.fromJson(Map<String, dynamic> json) =>
       _$$_AddressFromJson(json);
@@ -204,9 +204,9 @@ class _$_Address implements _Address {
   @override
   final String label;
   @override
-  final String fullAddress;
+  final String full_address;
   @override
-  final String postalCode;
+  final String postal_code;
   @override
   final String country;
   @override
@@ -214,11 +214,11 @@ class _$_Address implements _Address {
   @override
   final String region;
   @override
-  final bool isDefault;
+  final bool is_default;
 
   @override
   String toString() {
-    return 'Address(id: $id, label: $label, fullAddress: $fullAddress, postalCode: $postalCode, country: $country, city: $city, region: $region, isDefault: $isDefault)';
+    return 'Address(id: $id, label: $label, full_address: $full_address, postal_code: $postal_code, country: $country, city: $city, region: $region, is_default: $is_default)';
   }
 
   @override
@@ -228,21 +228,21 @@ class _$_Address implements _Address {
             other is _$_Address &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.label, label) || other.label == label) &&
-            (identical(other.fullAddress, fullAddress) ||
-                other.fullAddress == fullAddress) &&
-            (identical(other.postalCode, postalCode) ||
-                other.postalCode == postalCode) &&
+            (identical(other.full_address, full_address) ||
+                other.full_address == full_address) &&
+            (identical(other.postal_code, postal_code) ||
+                other.postal_code == postal_code) &&
             (identical(other.country, country) || other.country == country) &&
             (identical(other.city, city) || other.city == city) &&
             (identical(other.region, region) || other.region == region) &&
-            (identical(other.isDefault, isDefault) ||
-                other.isDefault == isDefault));
+            (identical(other.is_default, is_default) ||
+                other.is_default == is_default));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, label, fullAddress,
-      postalCode, country, city, region, isDefault);
+  int get hashCode => Object.hash(runtimeType, id, label, full_address,
+      postal_code, country, city, region, is_default);
 
   @JsonKey(ignore: true)
   @override
@@ -262,12 +262,12 @@ abstract class _Address implements Address {
   factory _Address(
       {required final int id,
       required final String label,
-      required final String fullAddress,
-      required final String postalCode,
+      required final String full_address,
+      required final String postal_code,
       required final String country,
       required final String city,
       required final String region,
-      required final bool isDefault}) = _$_Address;
+      required final bool is_default}) = _$_Address;
 
   factory _Address.fromJson(Map<String, dynamic> json) = _$_Address.fromJson;
 
@@ -276,9 +276,9 @@ abstract class _Address implements Address {
   @override
   String get label;
   @override
-  String get fullAddress;
+  String get full_address;
   @override
-  String get postalCode;
+  String get postal_code;
   @override
   String get country;
   @override
@@ -286,7 +286,7 @@ abstract class _Address implements Address {
   @override
   String get region;
   @override
-  bool get isDefault;
+  bool get is_default;
   @override
   @JsonKey(ignore: true)
   _$$_AddressCopyWith<_$_Address> get copyWith =>
