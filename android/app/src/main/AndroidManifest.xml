@@ -1,9 +1,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.furniture_ecommerce_app">
+    package="com.example.furniture_ecommerce_app"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> -->
    <application
         android:label="furniture_ecommerce_app"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        tools:replace="android:label"
+        >
+        <activity
+            android:name="com.xendit.example.CreateTokenActivity"
+            android:theme="@style/NormalTheme"/>
+        <activity
+            android:name="com.xendit.example.AuthenticationActivity"
+            android:theme="@style/NormalTheme"/>
+        <activity
+            android:name="com.xendit.example.ValidationUtilActivity"
+            android:theme="@style/NormalTheme"/>
+        <activity android:name="com.xendit.XenditActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

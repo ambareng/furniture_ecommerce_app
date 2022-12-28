@@ -15,6 +15,8 @@ import 'package:furniture_ecommerce_app/features/auth/screens/login_screen.dart'
 import 'package:furniture_ecommerce_app/features/auth/screens/signup_screen.dart';
 import 'package:furniture_ecommerce_app/features/bottom_navbar/bloc/bottom_navbar_bloc.dart';
 import 'package:furniture_ecommerce_app/features/check_out/screens/check_out_screen.dart';
+import 'package:furniture_ecommerce_app/features/credit_card/bloc/credit_card_bloc.dart';
+import 'package:furniture_ecommerce_app/features/credit_card/repositories/credit_card_repo.dart';
 import 'package:furniture_ecommerce_app/features/favorites/screens/favorites_screen.dart';
 import 'package:furniture_ecommerce_app/features/furniture/bloc/furniture_bloc.dart';
 import 'package:furniture_ecommerce_app/features/furniture/bloc/furniture_order_quantity_bloc.dart';
@@ -59,6 +61,9 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) => AddressRepo(),
         ),
+        RepositoryProvider(
+          create: (context) => CreditCardRepo(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -86,6 +91,11 @@ class MyApp extends StatelessWidget {
               create: ((context) => AddressBloc(
                   authRepo: RepositoryProvider.of<AuthRepo>(context),
                   addressRepo: RepositoryProvider.of<AddressRepo>(context)))),
+          BlocProvider(
+              create: ((context) => CreditCardBloc(
+                  authRepo: RepositoryProvider.of<AuthRepo>(context),
+                  creditCardRepo:
+                      RepositoryProvider.of<CreditCardRepo>(context)))),
         ],
         child: MaterialApp(
             theme: ThemeData(
