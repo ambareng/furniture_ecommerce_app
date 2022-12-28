@@ -35,7 +35,7 @@ class CheckOutScreen extends StatelessWidget {
               const CheckOutCard(
                 title: 'Payment',
                 type: CheckOutCardType.payment,
-                url: '/addresses',
+                url: '/payment_methods',
               ),
               const Gap(25),
               const CheckOutCard(

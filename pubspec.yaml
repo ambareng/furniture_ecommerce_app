@@ -52,6 +52,7 @@ dependencies:
   json_annotation: ^4.7.0
   badges: ^2.0.3
   fxendit: ^0.0.3
+  awesome_card: ^1.1.7
 
 dev_dependencies:
   flutter_test:
