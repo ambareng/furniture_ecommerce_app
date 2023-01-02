@@ -38,4 +38,20 @@ class CreditCardRepo {
     }
     return null;
   }
+
+  Future<List<CreditCard>?> toggleCreditCardDefault(
+      {required String accessToken, required int creditCardId}) async {
+    final Response res = await post(
+      Uri.parse(
+          '${dotenv.env['BACKEND_BASE_URL']!}v1/api/credit_cards/$creditCardId/toggle_default/'),
+      headers: {'Authorization': 'Bearer $accessToken'},
+    );
+    if (res.statusCode == 200) {
+      final List<dynamic> listResults = jsonDecode(res.body);
+      return listResults.map((card) {
+        return CreditCard.fromJson(card);
+      }).toList();
+    }
+    return null;
+  }
 }

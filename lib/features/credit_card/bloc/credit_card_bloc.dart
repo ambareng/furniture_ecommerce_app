@@ -52,5 +52,25 @@ class CreditCardBloc extends Bloc<CreditCardEvent, CreditCardState> {
         }
       }
     });
+    on<ToggleCreditCardDefaultEvent>((event, emit) async {
+      final String? accessToken = await authRepo.getAccessToken();
+      if (accessToken != null) {
+        final List<CreditCard>? listCreditCards =
+            await creditCardRepo.toggleCreditCardDefault(
+                accessToken: accessToken, creditCardId: event.creditCardId);
+        if (listCreditCards != null) {
+          CreditCard? selectedCard;
+          for (CreditCard card in listCreditCards) {
+            if (card.is_default) {
+              selectedCard = card;
+            }
+          }
+          emit(CreditCardState(
+              status: CreditCardStatus.loaded,
+              creditCards: listCreditCards,
+              defaultCreditCard: selectedCard));
+        }
+      }
+    });
   }
 }

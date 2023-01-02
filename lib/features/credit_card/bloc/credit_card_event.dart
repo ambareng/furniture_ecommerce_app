@@ -26,3 +26,12 @@ class SaveCreditCardEvent extends CreditCardEvent {
   @override
   List<Object> get props => [creditCardPayload];
 }
+
+class ToggleCreditCardDefaultEvent extends CreditCardEvent {
+  final int creditCardId;
+
+  const ToggleCreditCardDefaultEvent({required this.creditCardId});
+
+  @override
+  List<Object> get props => [creditCardId];
+}

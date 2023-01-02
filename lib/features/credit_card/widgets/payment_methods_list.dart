@@ -79,7 +79,12 @@ class PaymentMethodsList extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(5)),
                             value: state.creditCards![index].is_default,
                             activeColor: bgBlack,
-                            onChanged: (bool? value) {}),
+                            onChanged: (bool? value) {
+                              BlocProvider.of<CreditCardBloc>(context).add(
+                                  ToggleCreditCardDefaultEvent(
+                                      creditCardId:
+                                          state.creditCards![index].id));
+                            }),
                         Text(
                           'Use as default payment method',
                           style: GoogleFonts.nunitoSans(
