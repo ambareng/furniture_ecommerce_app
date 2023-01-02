@@ -5,6 +5,7 @@ import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:furniture_ecommerce_app/core/styles.dart';
 import 'package:furniture_ecommerce_app/features/credit_card/bloc/credit_card_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class PaymentMethodsList extends StatelessWidget {
   const PaymentMethodsList({Key? key}) : super(key: key);
@@ -37,7 +38,7 @@ class PaymentMethodsList extends StatelessWidget {
         return ListView.builder(
             padding: EdgeInsets.zero,
             shrinkWrap: true,
-            itemCount: 2,
+            itemCount: state.creditCards!.length,
             itemBuilder: ((context, index) {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 20),
@@ -46,11 +47,12 @@ class PaymentMethodsList extends StatelessWidget {
                   children: [
                     CreditCardWidget(
                       cardBgColor: bgBlack,
-                      obscureCardNumber: true,
-                      cardNumber: "4000000000001000",
-                      expiryDate: "12/24",
-                      cardHolderName: "Arvin M. Bareng",
-                      cvvCode: "123",
+                      obscureCardNumber: false,
+                      cardNumber: state.creditCards![index].masked_number,
+                      expiryDate: DateFormat('MM/yy')
+                          .format(state.creditCards![index].expiry_date),
+                      cardHolderName: state.creditCards![index].holder_name,
+                      cvvCode: state.creditCards![index].cvv,
                       showBackView: false,
                       onCreditCardWidgetChange: (CreditCardBrand brand) {},
                       customCardTypeIcons: <CustomCardTypeIcon>[
@@ -75,7 +77,7 @@ class PaymentMethodsList extends StatelessWidget {
                         Checkbox(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5)),
-                            value: true,
+                            value: state.creditCards![index].is_default,
                             activeColor: bgBlack,
                             onChanged: (bool? value) {}),
                         Text(

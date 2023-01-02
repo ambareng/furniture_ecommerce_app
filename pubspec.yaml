@@ -53,6 +53,7 @@ dependencies:
   badges: ^2.0.3
   fxendit: ^0.0.3
   flutter_credit_card: ^3.0.4
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
