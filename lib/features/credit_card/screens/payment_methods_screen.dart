@@ -16,7 +16,7 @@ class PaymentMethodsScreen extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 50.0),
         child: FloatingActionButton(
           onPressed: () {
-            // Navigator.pushNamed(context, '/address/add');
+            Navigator.pushNamed(context, '/payment_methods/add');
           },
           backgroundColor: Colors.white,
           foregroundColor: black,

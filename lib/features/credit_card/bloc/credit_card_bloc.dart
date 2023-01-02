@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:furniture_ecommerce_app/core/auth/repositories/auth_repo.dart';
 import 'package:furniture_ecommerce_app/features/credit_card/models/credit_card.dart';
 import 'package:furniture_ecommerce_app/features/credit_card/repositories/credit_card_repo.dart';
@@ -36,6 +35,22 @@ class CreditCardBloc extends Bloc<CreditCardEvent, CreditCardState> {
         }
       }
       emit(state.copyWith(status: CreditCardStatus.loaded));
+    });
+    on<ErrorCreditCardEvent>((event, emit) async {
+      emit(state.copyWith(errors: event.errors));
+    });
+    on<SaveCreditCardEvent>((event, emit) async {
+      emit(state.copyWith(status: CreditCardStatus.saving));
+      final String? accessToken = await authRepo.getAccessToken();
+      if (accessToken != null) {
+        final CreditCard? createdCreditCard =
+            await creditCardRepo.saveCreditCard(
+                accessToken: accessToken,
+                creditCardPayload: event.creditCardPayload);
+        if (createdCreditCard != null) {
+          emit(state.copyWith(status: CreditCardStatus.saveSuccess));
+        }
+      }
     });
   }
 }

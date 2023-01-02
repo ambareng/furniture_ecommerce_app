@@ -25,8 +25,9 @@ mixin _$CreditCard {
   String get masked_number => throw _privateConstructorUsedError;
   DateTime get expiry_date => throw _privateConstructorUsedError;
   String get cvv => throw _privateConstructorUsedError;
-  String get holder => throw _privateConstructorUsedError;
+  String get holder_name => throw _privateConstructorUsedError;
   bool get is_default => throw _privateConstructorUsedError;
+  String get brand => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,8 +47,9 @@ abstract class $CreditCardCopyWith<$Res> {
       String masked_number,
       DateTime expiry_date,
       String cvv,
-      String holder,
-      bool is_default});
+      String holder_name,
+      bool is_default,
+      String brand});
 }
 
 /// @nodoc
@@ -68,8 +70,9 @@ class _$CreditCardCopyWithImpl<$Res, $Val extends CreditCard>
     Object? masked_number = null,
     Object? expiry_date = null,
     Object? cvv = null,
-    Object? holder = null,
+    Object? holder_name = null,
     Object? is_default = null,
+    Object? brand = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -92,14 +95,18 @@ class _$CreditCardCopyWithImpl<$Res, $Val extends CreditCard>
           ? _value.cvv
           : cvv // ignore: cast_nullable_to_non_nullable
               as String,
-      holder: null == holder
-          ? _value.holder
-          : holder // ignore: cast_nullable_to_non_nullable
+      holder_name: null == holder_name
+          ? _value.holder_name
+          : holder_name // ignore: cast_nullable_to_non_nullable
               as String,
       is_default: null == is_default
           ? _value.is_default
           : is_default // ignore: cast_nullable_to_non_nullable
               as bool,
+      brand: null == brand
+          ? _value.brand
+          : brand // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -118,8 +125,9 @@ abstract class _$$_CreditCardCopyWith<$Res>
       String masked_number,
       DateTime expiry_date,
       String cvv,
-      String holder,
-      bool is_default});
+      String holder_name,
+      bool is_default,
+      String brand});
 }
 
 /// @nodoc
@@ -138,8 +146,9 @@ class __$$_CreditCardCopyWithImpl<$Res>
     Object? masked_number = null,
     Object? expiry_date = null,
     Object? cvv = null,
-    Object? holder = null,
+    Object? holder_name = null,
     Object? is_default = null,
+    Object? brand = null,
   }) {
     return _then(_$_CreditCard(
       id: null == id
@@ -162,14 +171,18 @@ class __$$_CreditCardCopyWithImpl<$Res>
           ? _value.cvv
           : cvv // ignore: cast_nullable_to_non_nullable
               as String,
-      holder: null == holder
-          ? _value.holder
-          : holder // ignore: cast_nullable_to_non_nullable
+      holder_name: null == holder_name
+          ? _value.holder_name
+          : holder_name // ignore: cast_nullable_to_non_nullable
               as String,
       is_default: null == is_default
           ? _value.is_default
           : is_default // ignore: cast_nullable_to_non_nullable
               as bool,
+      brand: null == brand
+          ? _value.brand
+          : brand // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -183,8 +196,9 @@ class _$_CreditCard implements _CreditCard {
       required this.masked_number,
       required this.expiry_date,
       required this.cvv,
-      required this.holder,
-      required this.is_default});
+      required this.holder_name,
+      required this.is_default,
+      required this.brand});
 
   factory _$_CreditCard.fromJson(Map<String, dynamic> json) =>
       _$$_CreditCardFromJson(json);
@@ -200,13 +214,15 @@ class _$_CreditCard implements _CreditCard {
   @override
   final String cvv;
   @override
-  final String holder;
+  final String holder_name;
   @override
   final bool is_default;
+  @override
+  final String brand;
 
   @override
   String toString() {
-    return 'CreditCard(id: $id, token: $token, masked_number: $masked_number, expiry_date: $expiry_date, cvv: $cvv, holder: $holder, is_default: $is_default)';
+    return 'CreditCard(id: $id, token: $token, masked_number: $masked_number, expiry_date: $expiry_date, cvv: $cvv, holder_name: $holder_name, is_default: $is_default, brand: $brand)';
   }
 
   @override
@@ -221,15 +237,17 @@ class _$_CreditCard implements _CreditCard {
             (identical(other.expiry_date, expiry_date) ||
                 other.expiry_date == expiry_date) &&
             (identical(other.cvv, cvv) || other.cvv == cvv) &&
-            (identical(other.holder, holder) || other.holder == holder) &&
+            (identical(other.holder_name, holder_name) ||
+                other.holder_name == holder_name) &&
             (identical(other.is_default, is_default) ||
-                other.is_default == is_default));
+                other.is_default == is_default) &&
+            (identical(other.brand, brand) || other.brand == brand));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, token, masked_number,
-      expiry_date, cvv, holder, is_default);
+      expiry_date, cvv, holder_name, is_default, brand);
 
   @JsonKey(ignore: true)
   @override
@@ -252,8 +270,9 @@ abstract class _CreditCard implements CreditCard {
       required final String masked_number,
       required final DateTime expiry_date,
       required final String cvv,
-      required final String holder,
-      required final bool is_default}) = _$_CreditCard;
+      required final String holder_name,
+      required final bool is_default,
+      required final String brand}) = _$_CreditCard;
 
   factory _CreditCard.fromJson(Map<String, dynamic> json) =
       _$_CreditCard.fromJson;
@@ -269,9 +288,11 @@ abstract class _CreditCard implements CreditCard {
   @override
   String get cvv;
   @override
-  String get holder;
+  String get holder_name;
   @override
   bool get is_default;
+  @override
+  String get brand;
   @override
   @JsonKey(ignore: true)
   _$$_CreditCardCopyWith<_$_CreditCard> get copyWith =>

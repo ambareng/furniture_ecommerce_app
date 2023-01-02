@@ -17,6 +17,7 @@ import 'package:furniture_ecommerce_app/features/bottom_navbar/bloc/bottom_navba
 import 'package:furniture_ecommerce_app/features/check_out/screens/check_out_screen.dart';
 import 'package:furniture_ecommerce_app/features/credit_card/bloc/credit_card_bloc.dart';
 import 'package:furniture_ecommerce_app/features/credit_card/repositories/credit_card_repo.dart';
+import 'package:furniture_ecommerce_app/features/credit_card/screens/payment_methods_add_screen.dart';
 import 'package:furniture_ecommerce_app/features/credit_card/screens/payment_methods_screen.dart';
 import 'package:furniture_ecommerce_app/features/favorites/screens/favorites_screen.dart';
 import 'package:furniture_ecommerce_app/features/furniture/bloc/furniture_bloc.dart';
@@ -119,6 +120,8 @@ class MyApp extends StatelessWidget {
               '/address/add': (context) => const AddressAddScreen(),
               '/address/edit': (context) => const AddressEditScreen(),
               '/payment_methods': (context) => const PaymentMethodsScreen(),
+              '/payment_methods/add': (context) =>
+                  const PaymentMethodsAddScreen(),
             }),
       ),
     );

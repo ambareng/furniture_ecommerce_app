@@ -24,4 +24,18 @@ class CreditCardRepo {
     }
     return null;
   }
+
+  Future<CreditCard?> saveCreditCard(
+      {required String accessToken,
+      required Map<String, dynamic> creditCardPayload}) async {
+    final res = await post(
+        Uri.parse('${dotenv.env['BACKEND_BASE_URL']!}v1/api/credit_cards/'),
+        headers: {'Authorization': 'Bearer $accessToken'},
+        body: creditCardPayload);
+    if (res.statusCode == 201) {
+      final resJson = jsonDecode(res.body);
+      return CreditCard.fromJson(resJson);
+    }
+    return null;
+  }
 }

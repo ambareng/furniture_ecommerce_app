@@ -1,49 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:furniture_ecommerce_app/core/styles.dart';
 import 'package:furniture_ecommerce_app/features/credit_card/bloc/credit_card_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:fxendit/fxendit.dart';
 
 class CheckOutPaymentCard extends StatelessWidget {
   const CheckOutPaymentCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // Future<void> testXenditTokenization() async {
-    //   String? xenditPublicKey = dotenv.env["XENDIT_PUBLIC_API_KEY"];
-
-    //   if (xenditPublicKey != null) {
-    //     Xendit xendit = Xendit(xenditPublicKey);
-
-    //     XCard card = XCard(
-    //       creditCardNumber: '4000000000001000',
-    //       creditCardCVN: '123',
-    //       expirationMonth: '09',
-    //       expirationYear: '2023',
-    //     );
-
-    //     TokenResult result = await xendit.createMultipleUseToken(card);
-
-    //     if (result.isSuccess) {
-    //       String tokenId = result.token!.id;
-    //       debugPrint('==================================');
-    //       debugPrint(tokenId);
-    //       debugPrint('Token ID: ${result.token!.id}');
-    //       debugPrint('==================================');
-    //     } else {
-    //       debugPrint('==================================');
-    //       debugPrint(
-    //           'SingleUseToken Error: ${result.errorCode} - ${result.errorMessage}');
-    //       debugPrint('==================================');
-    //     }
-    //   }
-    // }
-
-    // testXenditTokenization();
-
     BlocProvider.of<CreditCardBloc>(context).add(GetAllCreditCardEvent());
 
     return Container(
