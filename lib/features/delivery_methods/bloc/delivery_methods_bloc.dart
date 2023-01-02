@@ -32,6 +32,7 @@ class DeliveryMethodsBloc
       }
     });
     on<SelectDeliveryMethodEvent>((event, emit) {
+      emit(state.copyWith(status: DeliveryMethodStatus.loading));
       emit(state.copyWith(
           status: DeliveryMethodStatus.loaded,
           selectedDeliveryMethod: event.selectedDeliveryMethod));
