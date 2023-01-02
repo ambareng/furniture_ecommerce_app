@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_ecommerce_app/core/styles.dart';
+import 'package:furniture_ecommerce_app/features/delivery_methods/bloc/delivery_methods_bloc.dart';
+import 'package:furniture_ecommerce_app/features/my_cart/bloc/my_cart_total_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CheckOutBreakdownCard extends StatelessWidget {
@@ -22,13 +25,40 @@ class CheckOutBreakdownCard extends StatelessWidget {
             )
           ]),
       child: Column(
-        children: const [
-          BreakdownItem(breakdownLabel: 'Order', breakdownPrice: 95.00),
-          BreakdownItem(breakdownLabel: 'Delivery', breakdownPrice: 5.00),
-          BreakdownItem(
-            breakdownLabel: 'Total',
-            breakdownPrice: 100.00,
-            isHighlighted: true,
+        children: [
+          BlocBuilder<MyCartTotalBloc, MyCartTotalState>(
+            builder: (context, state) {
+              return BreakdownItem(
+                  breakdownLabel: 'Order', breakdownPrice: state.total ?? 0.00);
+            },
+          ),
+          BlocBuilder<DeliveryMethodsBloc, DeliveryMethodsState>(
+            builder: (context, state) {
+              return BreakdownItem(
+                  breakdownLabel: 'Delivery',
+                  breakdownPrice: state.selectedDeliveryMethod != null
+                      ? state.selectedDeliveryMethod!.price
+                      : 0.00);
+            },
+          ),
+          BlocBuilder<DeliveryMethodsBloc, DeliveryMethodsState>(
+            builder: (context, deliveryMethodState) {
+              return BlocBuilder<MyCartTotalBloc, MyCartTotalState>(
+                builder: (context, myCartState) {
+                  return BreakdownItem(
+                    breakdownLabel: 'Total',
+                    breakdownPrice:
+                        deliveryMethodState.selectedDeliveryMethod != null &&
+                                myCartState.total != null
+                            ? deliveryMethodState
+                                    .selectedDeliveryMethod!.price +
+                                myCartState.total!
+                            : 0.00,
+                    isHighlighted: true,
+                  );
+                },
+              );
+            },
           )
         ],
       ),
