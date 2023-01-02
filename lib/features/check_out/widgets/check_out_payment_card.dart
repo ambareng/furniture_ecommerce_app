@@ -55,6 +55,7 @@ class CheckOutPaymentCard extends StatelessWidget {
               Container(
                 width: 64,
                 height: 38,
+                padding: const EdgeInsets.all(5.0),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
@@ -66,11 +67,14 @@ class CheckOutPaymentCard extends StatelessWidget {
                       )
                     ]),
                 child: Image.asset(
-                    'assets/images/credit_card_logos/mastercard.png'),
+                  state.defaultCreditCard!.brand == 'MASTERCARD'
+                      ? 'assets/images/credit_card_logos/mastercard.png'
+                      : 'assets/images/credit_card_logos/visa_blue.png',
+                ),
               ),
               const Gap(20),
               Text(
-                '**** **** **** 3947',
+                state.defaultCreditCard!.masked_number,
                 style: GoogleFonts.nunitoSans(
                     textStyle: const TextStyle(
                         fontWeight: FontWeight.w600,
